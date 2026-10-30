@@ -1,41 +1,350 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHero from "../components/PageHero.astro";
-import ContactForm from "../components/ContactForm.astro";
 import { SITE } from "../data/site";
+
+const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? "";
+const subjects = ["Support", "Presse", "Partenariat", "Signaler une erreur"];
 ---
 
 <BaseLayout
   title="Contact"
   description="Une question, un bug, un partenariat ? Écris à l'équipe Joutio."
 >
-  <PageHero
-    eyebrow="Contact"
-    title="Écris-nous."
-    description="On répond en général sous deux jours ouvrés. Pour supprimer ton compte, passe plutôt par les réglages de l'appli."
-  />
+  <div class="contact-page">
+    <div class="contact-page__left">
+      <span class="contact-page__eyebrow">Contact</span>
+      <h1>Écris-nous</h1>
+      <p class="contact-page__lede">
+        On répond en général sous deux jours ouvrés. Pour supprimer ton compte,
+        passe plutôt par les <a href="/data-deletion/">réglages de l'appli</a>.
+      </p>
 
-  <div class="container">
-    <div class="plan" style="padding:48px 0 72px">
-      <ContactForm />
+      <form
+        class="contact-form"
+        data-form
+        data-endpoint={endpoint}
+        data-fallback-email={SITE.email}
+        data-form-kind="contact"
+        novalidate
+      >
+        <div class="contact-form__row">
+          <label>
+            <span>Nom</span>
+            <input name="name" placeholder="Manon Laurent" autocomplete="name" />
+          </label>
+          <label>
+            <span>E-mail</span>
+            <input
+              name="email"
+              type="email"
+              inputmode="email"
+              placeholder="manon@mail.fr"
+              autocomplete="email"
+              required
+            />
+          </label>
+        </div>
 
-      <div>
-        <h2>Le plus direct</h2>
-        <p class="muted">
-          Pour le support, les données personnelles ou une question sur le jeu :
-        </p>
+        <div class="contact-form__field">
+          <span class="contact-form__label">Sujet</span>
+          <div class="contact-form__chips">
+            {subjects.map((subject, index) => (
+              <label class="contact-chip">
+                <input
+                  type="radio"
+                  name="subject"
+                  value={subject}
+                  checked={index === 0}
+                />
+                <span>{subject}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <label class="contact-form__field">
+          <span class="contact-form__label">Message</span>
+          <textarea name="message" rows="6" placeholder="Ton message" required></textarea>
+        </label>
+
+        <button class="contact-form__submit" type="submit">Envoyer le message</button>
+        <p class="waitlist-form__status" data-form-status role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="contact-page__right" id="presse">
+      <div class="contact-card">
+        <b class="contact-card__title">Presse</b>
         <p>
-          <a class="btn btn--secondary" href={`mailto:${SITE.email}`}>{SITE.email}</a>
-        </p>
-
-        <h2 style="margin-top:40px">Presse</h2>
-        <p class="muted">
           Interviews, chiffres, accès anticipé :
+          <a href={`mailto:${SITE.pressEmail}`}>{SITE.pressEmail}</a>
         </p>
-        <p>
-          <a class="btn btn--secondary" href={`mailto:${SITE.pressEmail}`}>{SITE.pressEmail}</a>
-        </p>
+
+        <div class="contact-card__downloads">
+          <div class="contact-download">
+            <span class="contact-download__icon"><i class="ph ph-shapes"></i></span>
+            <div>
+              <b>Logos</b>
+              <span>SVG · PNG · 1,2 Mo</span>
+            </div>
+            <i class="ph ph-download-simple"></i>
+          </div>
+          <div class="contact-download">
+            <span class="contact-download__icon"><i class="ph ph-device-mobile"></i></span>
+            <div>
+              <b>Captures d'écran</b>
+              <span>PNG · 8 écrans · 14 Mo</span>
+            </div>
+            <i class="ph ph-download-simple"></i>
+          </div>
+          <div class="contact-download">
+            <span class="contact-download__icon"><i class="ph ph-palette"></i></span>
+            <div>
+              <b>Guide de marque</b>
+              <span>PDF · 3,4 Mo</span>
+            </div>
+            <i class="ph ph-download-simple"></i>
+          </div>
+          <div class="contact-download">
+            <span class="contact-download__icon"><i class="ph ph-file-text"></i></span>
+            <div>
+              <b>Fiche de présentation</b>
+              <span>PDF · 1 page</span>
+            </div>
+            <i class="ph ph-download-simple"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <b class="contact-card__title">Support et données</b>
+        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
       </div>
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  .contact-page {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: clamp(48px, 7vw, 96px) 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 64px;
+  }
+
+  .contact-page__left {
+    flex: 1 1 420px;
+    display: grid;
+    gap: 20px;
+    align-content: start;
+  }
+
+  .contact-page__eyebrow {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--jo-accent-ink);
+  }
+
+  .contact-page h1 {
+    margin: 0;
+    font-size: clamp(36px, 5vw, 52px);
+    line-height: 1.02;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  .contact-page__lede {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--jo-muted);
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 14px;
+  }
+
+  .contact-form__row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+
+  .contact-form label,
+  .contact-form__field {
+    display: grid;
+    gap: 6px;
+  }
+
+  .contact-form label > span,
+  .contact-form__label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    font-size: 16px;
+    font-family: inherit;
+    border: 0;
+    border-radius: 8px;
+    background: var(--jo-raised);
+    color: var(--jo-text);
+    box-shadow: inset 0 0 0 1px var(--jo-border);
+    outline: none;
+  }
+
+  .contact-form input {
+    height: 48px;
+    padding: 0 14px;
+  }
+
+  .contact-form textarea {
+    padding: 12px 14px;
+    line-height: 24px;
+    resize: vertical;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    box-shadow: inset 0 0 0 1px var(--jo-accent);
+  }
+
+  .contact-form__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .contact-chip {
+    position: relative;
+    display: block;
+  }
+
+  .contact-chip input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .contact-chip span {
+    display: grid;
+    place-items: center;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 9999px;
+    background: var(--jo-raised);
+    color: var(--jo-text);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .contact-chip input:checked + span {
+    background: var(--jo-text);
+    color: var(--jo-bg);
+  }
+
+  .contact-chip input:focus-visible + span {
+    outline: 2px solid var(--jo-accent);
+    outline-offset: 2px;
+  }
+
+  .contact-form__submit {
+    justify-self: start;
+    height: 48px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--jo-accent);
+    color: var(--jo-on-accent);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .contact-page__right {
+    flex: 1 1 320px;
+    display: grid;
+    gap: 16px;
+    align-content: start;
+  }
+
+  .contact-card {
+    padding: 24px;
+    border-radius: 18px;
+    background: var(--jo-surface);
+    display: grid;
+    gap: 14px;
+  }
+
+  .contact-card__title {
+    font-size: 18px;
+  }
+
+  .contact-card p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--jo-muted);
+  }
+
+  .contact-card__downloads {
+    display: grid;
+    gap: 8px;
+  }
+
+  .contact-download {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--jo-raised);
+  }
+
+  .contact-download__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--jo-hover);
+    display: grid;
+    place-items: center;
+  }
+
+  .contact-download__icon i {
+    font-size: 20px;
+  }
+
+  .contact-download div {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+  }
+
+  .contact-download b {
+    font-size: 14px;
+  }
+
+  .contact-download span {
+    font-family: var(--jo-font-mono);
+    font-size: 12px;
+    color: var(--jo-muted);
+  }
+
+  .contact-download > i {
+    font-size: 20px;
+    color: var(--jo-muted);
+  }
+
+  @media (max-width: 760px) {
+    .contact-page {
+      padding: 48px 24px;
+    }
+  }
+</style>

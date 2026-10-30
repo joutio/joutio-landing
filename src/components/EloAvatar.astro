@@ -1,0 +1,196 @@
+---
+/**
+ * Port exact du composant `design/assets/components/Elo Avatar.dc.html`.
+ * Les branches et les valeurs sont celles du design system 2.1.
+ */
+export type EloTier =
+  | "NONE"
+  | "PROVISIONAL"
+  | "FER"
+  | "BRONZE"
+  | "ARGENT"
+  | "OR"
+  | "PLATINE"
+  | "EMERAUDE"
+  | "DIAMANT";
+
+export interface Props {
+  tier: EloTier;
+  seed: string;
+  bg: string;
+  size: number;
+  surface?: string;
+  src?: string;
+  locked?: boolean;
+}
+
+const {
+  tier,
+  seed,
+  bg,
+  size,
+  surface = "var(--jo-bg)",
+  src,
+  locked = false,
+} = Astro.props;
+
+const localAvatars: Record<string, string> = {
+  lucas: "/avatars/lucas.svg",
+  ines: "/avatars/ines.svg",
+  hugo: "/avatars/hugo.svg",
+  manon: "/avatars/manon.svg",
+  yanis: "/avatars/yanis.svg",
+  kenji: "/avatars/kenji.svg",
+  sofia: "/avatars/sofia.svg",
+  idriss: "/avatars/idriss.svg",
+};
+
+const resolvedSrc =
+  src ??
+  localAvatars[seed.toLowerCase()] ??
+  `https://api.dicebear.com/9.x/notionists/svg?seed=${encodeURIComponent(seed)}&backgroundColor=${bg}`;
+
+const full = size >= 40 && tier !== "NONE";
+const lockFilter = locked ? "grayscale(1) brightness(.55)" : "none";
+---
+
+<div style={`position:relative;width:${size}px;height:${size}px;min-width:16px;min-height:16px`}>
+  {tier === "NONE" && (
+    <img
+      src={resolvedSrc}
+      alt=""
+      style={`position:absolute;top:0;left:0;width:100%;height:100%;border-radius:9999px;outline:0 solid transparent`}
+    />
+  )}
+
+  {full && tier === "PROVISIONAL" && (
+    <>
+      <i style="position:absolute;inset:0;border-radius:9999px;border:2px dashed var(--jo-border)"></i>
+      <img
+        src={resolvedSrc}
+        alt=""
+        style="position:absolute;top:8%;left:8%;width:84%;height:84%;border-radius:9999px;filter:saturate(.6)"
+      />
+    </>
+  )}
+
+  {full && tier === "FER" && (
+    <>
+      <i style="position:absolute;inset:0;border-radius:9999px;background:#3F444C"></i>
+      <img
+        src={resolvedSrc}
+        alt=""
+        style={`position:absolute;top:5%;left:5%;width:90%;height:90%;border-radius:9999px;filter:${lockFilter}`}
+      />
+    </>
+  )}
+
+  {full && tier === "BRONZE" && (
+    <>
+      <i style="position:absolute;inset:0;border-radius:9999px;background:conic-gradient(from 200deg,#6e3412,#d4925a,#8a4a20,#eab07a,#7a3e18,#c27a42,#6e3412)"></i>
+      <i style={`position:absolute;inset:6%;border-radius:9999px;background:${surface}`}></i>
+      <img
+        src={resolvedSrc}
+        alt=""
+        style={`position:absolute;top:7.5%;left:7.5%;width:85%;height:85%;border-radius:9999px;filter:${lockFilter}`}
+      />
+    </>
+  )}
+
+  {full && tier === "ARGENT" && (
+    <>
+      <i style="position:absolute;inset:-6%;border-radius:9999px;border:1px solid rgba(180,188,200,.5)"></i>
+      <i style="position:absolute;inset:0;border-radius:9999px;background:conic-gradient(from 200deg,#6f7783,#eef1f5,#8C95A3,#ffffff,#6f7783,#c9cfd8,#6f7783)"></i>
+      <i style={`position:absolute;inset:6.5%;border-radius:9999px;background:${surface}`}></i>
+      <img
+        src={resolvedSrc}
+        alt=""
+        style={`position:absolute;top:8%;left:8%;width:84%;height:84%;border-radius:9999px;filter:${lockFilter}`}
+      />
+    </>
+  )}
+
+  {full && tier === "OR" && (
+    <>
+      <i style="position:absolute;inset:-14%;border-radius:9999px;background:radial-gradient(circle,rgba(232,176,74,.34) 34%,transparent 68%)"></i>
+      <i style="position:absolute;inset:-6%;border-radius:9999px;border:1px solid rgba(232,190,90,.55)"></i>
+      <i style="position:absolute;inset:0;border-radius:9999px;background:conic-gradient(from 210deg,#8a6410,#ffe08a,#c9971c,#fff3c4,#a87a12,#ffd76a,#8a6410)"></i>
+      <i style={`position:absolute;inset:7%;border-radius:9999px;background:${surface}`}></i>
+      <img
+        src={resolvedSrc}
+        alt=""
+        style={`position:absolute;top:8.5%;left:8.5%;width:83%;height:83%;border-radius:9999px;filter:${lockFilter}`}
+      />
+    </>
+  )}
+
+  {full && tier === "PLATINE" && (
+    <>
+      <i style="position:absolute;inset:-16%;border-radius:9999px;background:radial-gradient(circle,rgba(150,170,220,.36) 32%,transparent 68%)"></i>
+      <i style="position:absolute;inset:-6%;border-radius:9999px;border:1px solid rgba(190,204,238,.6)"></i>
+      <i style="position:absolute;inset:0;border-radius:9999px;background:conic-gradient(from 200deg,#56658f,#eef2fd,#8C9FC9,#ffffff,#65749f,#d5ddf2,#56658f)"></i>
+      <i
+        data-jo-motion
+        style="position:absolute;inset:0;border-radius:9999px;background:conic-gradient(transparent 0 38%,rgba(255,255,255,.85) 46%,transparent 54% 100%);animation:jo-spin 5s linear infinite"
+      ></i>
+      <i style={`position:absolute;inset:7.5%;border-radius:9999px;background:${surface}`}></i>
+      <img
+        src={resolvedSrc}
+        alt=""
+        style={`position:absolute;top:9%;left:9%;width:82%;height:82%;border-radius:9999px;filter:${lockFilter}`}
+      />
+    </>
+  )}
+
+  {full && tier === "EMERAUDE" && (
+    <>
+      <i style="position:absolute;inset:-18%;border-radius:9999px;background:radial-gradient(circle,rgba(47,191,119,.4) 30%,transparent 68%)"></i>
+      <i style="position:absolute;inset:-11%;border-radius:9999px;border:1px solid rgba(95,220,158,.3)"></i>
+      <i style="position:absolute;inset:-6%;border-radius:9999px;border:1px solid rgba(95,220,158,.65)"></i>
+      <i style="position:absolute;inset:0;border-radius:9999px;background:conic-gradient(from 200deg,#0a5e38,#9df5c9,#2FBF77,#e4fff0,#107446,#5fdc9e,#0a5e38)"></i>
+      <i
+        data-jo-motion
+        style="position:absolute;inset:0;border-radius:9999px;background:conic-gradient(transparent 0 30%,rgba(230,255,240,.85) 38%,transparent 46% 80%,rgba(230,255,240,.5) 86%,transparent 92% 100%);animation:jo-spin 4.5s linear infinite"
+      ></i>
+      <i style={`position:absolute;inset:8%;border-radius:9999px;background:${surface}`}></i>
+      <img
+        src={resolvedSrc}
+        alt=""
+        style={`position:absolute;top:9.5%;left:9.5%;width:81%;height:81%;border-radius:9999px;filter:${lockFilter}`}
+      />
+    </>
+  )}
+
+  {full && tier === "DIAMANT" && (
+    <>
+      <i
+        data-jo-motion
+        style="position:absolute;inset:-22%;border-radius:9999px;background:radial-gradient(circle,rgba(120,200,255,.45) 26%,rgba(170,140,255,.18) 48%,transparent 70%);animation:jo-pulse 2.4s ease-in-out infinite alternate"
+      ></i>
+      <i style="position:absolute;inset:-11%;border-radius:9999px;border:1px solid rgba(201,240,255,.35)"></i>
+      <i style="position:absolute;inset:-6%;border-radius:9999px;border:1px solid rgba(180,228,255,.75)"></i>
+      <i
+        data-jo-motion
+        style="position:absolute;inset:0;border-radius:9999px;background:conic-gradient(#5DB4E2,#eaf8ff,#a58cf0,#5DB4E2,#c9f0ff,#7fe0d0,#ffffff,#5DB4E2);animation:jo-spin 7s linear infinite"
+      ></i>
+      <i
+        data-jo-motion
+        style="position:absolute;inset:0;border-radius:9999px;background:conic-gradient(transparent 0 40%,rgba(255,255,255,.9) 47%,transparent 54% 100%);animation:jo-spin 3.5s linear infinite reverse"
+      ></i>
+      <i style={`position:absolute;inset:8.5%;border-radius:9999px;background:${surface}`}></i>
+      <img
+        src={resolvedSrc}
+        alt=""
+        style={`position:absolute;top:10%;left:10%;width:80%;height:80%;border-radius:9999px;filter:${lockFilter}`}
+      />
+    </>
+  )}
+
+  {locked && full && (
+    <span
+      style={`position:absolute;right:0;bottom:0;width:30%;height:30%;border-radius:9999px;background:var(--jo-text);color:var(--jo-bg);display:grid;place-items:center;box-shadow:0 0 0 2px ${surface}`}
+    >
+      <i class="ph-fill ph-lock-simple" style="font-size:60%"></i>
+    </span>
+  )}
+</div>

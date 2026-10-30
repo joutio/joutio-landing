@@ -1,8 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHero from "../components/PageHero.astro";
-import FaqList from "../components/FaqList.astro";
-import { FAQ, SITE } from "../data/site";
+import { FAQ } from "../data/site";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -22,17 +20,136 @@ const jsonLd = {
   description="Comment se déroule un duel, comment fonctionne l'Elo, comment supprimer ton compte : les réponses aux questions les plus fréquentes."
   jsonLd={jsonLd}
 >
-  <PageHero
-    eyebrow="FAQ"
-    title="Questions fréquentes"
-    description="Tout ce qu'on nous demande sur le duel, la progression et le compte. Si ta question n'est pas là, écris-nous."
-  />
+  <div class="faq-page">
+    <span class="faq-page__eyebrow">Aide</span>
+    <h1>Questions fréquentes</h1>
 
-  <div class="container">
-    <FaqList groups={FAQ} openFirst={false} />
+    {FAQ.map((group, groupIndex) => (
+      <div class="faq-page__group">
+        <b class="faq-page__group-title">{group.group}</b>
+        {group.items.map((item, itemIndex) => (
+          <details class="faq-page__item" open={groupIndex === 0 && itemIndex === 0}>
+            <summary>
+              <span>{item.q}</span>
+              <span class="faq-page__icon" aria-hidden="true">
+                <i class="ph ph-plus plus"></i>
+                <i class="ph ph-minus minus"></i>
+              </span>
+            </summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    ))}
 
-    <p style="margin:40px 0 72px">
-      Pas de réponse ici ? <a href={`mailto:${SITE.email}`}>Écris-nous</a>.
+    <p class="faq-page__footer">
+      Pas de réponse ici ? <a href="/contact/">Écris-nous</a>.
     </p>
   </div>
 </BaseLayout>
+
+<style>
+  .faq-page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: clamp(48px, 7vw, 96px) 24px;
+  }
+
+  .faq-page__eyebrow {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--jo-accent-ink);
+  }
+
+  .faq-page h1 {
+    margin: 10px 0 36px;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.02;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  .faq-page__group {
+    display: grid;
+    margin-bottom: 36px;
+  }
+
+  .faq-page__group-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--jo-muted);
+    padding-bottom: 6px;
+  }
+
+  .faq-page__item {
+    border-bottom: 1px solid var(--jo-border);
+  }
+
+  .faq-page__item summary {
+    appearance: none;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 0;
+    background: transparent;
+    color: var(--jo-text);
+    font-size: 17px;
+    line-height: 25px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-page__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-page__icon {
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    color: var(--jo-muted);
+    flex: none;
+  }
+
+  .faq-page__icon .minus {
+    display: none;
+  }
+
+  .faq-page__item[open] .faq-page__icon .plus {
+    display: none;
+  }
+
+  .faq-page__item[open] .faq-page__icon .minus {
+    display: block;
+  }
+
+  .faq-page__item p {
+    margin: 0;
+    padding: 0 0 18px;
+    max-width: 680px;
+    font-size: 16px;
+    line-height: 25px;
+    color: var(--jo-muted);
+    text-wrap: pretty;
+  }
+
+  .faq-page__footer {
+    margin: 0;
+    font-size: 15px;
+    color: var(--jo-muted);
+  }
+
+  .faq-page__footer a {
+    color: var(--jo-text);
+  }
+
+  @media (max-width: 760px) {
+    .faq-page {
+      padding: 48px 24px;
+    }
+  }
+</style>

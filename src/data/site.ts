@@ -34,13 +34,13 @@ export const STEPS = [
 ] as const;
 
 export const RANKS = [
-  { name: "Fer", min: 0, elo: "départ", avatar: "lucas", ring: "iron", labelColor: "var(--jo-text)" },
-  { name: "Bronze", min: 400, elo: "400 Elo", avatar: "ines", ring: "bronze", labelColor: "color-mix(in oklab, #B86A32 75%, var(--jo-text))" },
-  { name: "Argent", min: 600, elo: "600 Elo", avatar: "hugo", ring: "silver", labelColor: "color-mix(in oklab, #8C95A3 75%, var(--jo-text))" },
-  { name: "Or", min: 800, elo: "800 Elo", avatar: "manon", ring: "gold", labelColor: "color-mix(in oklab, #D9A826 75%, var(--jo-text))" },
-  { name: "Platine", min: 1000, elo: "1 000 Elo", avatar: "yanis", ring: "platinum", labelColor: "color-mix(in oklab, #8C9FC9 75%, var(--jo-text))" },
-  { name: "Émeraude", min: 1200, elo: "1 200 Elo", avatar: "kenji", ring: "emerald", labelColor: "color-mix(in oklab, #2FBF77 75%, var(--jo-text))" },
-  { name: "Diamant", min: 1400, elo: "1 400 Elo", avatar: null, ring: "diamond", labelColor: "color-mix(in oklab, #5DB4E2 75%, var(--jo-text))" },
+  { name: "Fer", min: 0, elo: "départ", tier: "FER", seed: "Lucas", bg: "d1d4f9", labelColor: "var(--jo-text)" },
+  { name: "Bronze", min: 400, elo: "400 Elo", tier: "BRONZE", seed: "Ines", bg: "ffd5dc", labelColor: "color-mix(in oklab, #B86A32 75%, var(--jo-text))" },
+  { name: "Argent", min: 600, elo: "600 Elo", tier: "ARGENT", seed: "Hugo", bg: "c0e8ff", labelColor: "color-mix(in oklab, #8C95A3 75%, var(--jo-text))" },
+  { name: "Or", min: 800, elo: "800 Elo", tier: "OR", seed: "Manon", bg: "ffd9a0", labelColor: "color-mix(in oklab, #D9A826 75%, var(--jo-text))" },
+  { name: "Platine", min: 1000, elo: "1 000 Elo", tier: "PLATINE", seed: "Yanis", bg: "e3d4ff", labelColor: "color-mix(in oklab, #8C9FC9 75%, var(--jo-text))" },
+  { name: "Émeraude", min: 1200, elo: "1 200 Elo", tier: "EMERAUDE", seed: "Kenji", bg: "c9f2e3", labelColor: "color-mix(in oklab, #2FBF77 75%, var(--jo-text))" },
+  { name: "Diamant", min: 1400, elo: "1 400 Elo", tier: "DIAMANT", seed: "Sofia", bg: "e3d4ff", labelColor: "color-mix(in oklab, #5DB4E2 75%, var(--jo-text))" },
 ] as const;
 
 export const CATEGORIES = [
@@ -141,10 +141,6 @@ export const FAQ: FaqGroup[] = [
       {
         q: "Comment supprimer mon compte ?",
         a: "Réglages, Zone de danger, Supprimer mon compte. C'est immédiat et définitif.",
-      },
-      {
-        q: "Sur quels téléphones Joutio est-il disponible ?",
-        a: "Android d'abord, via la liste d'attente. iOS suivra. En attendant, le jeu est aussi accessible sur le web à l'adresse app.joutio.com.",
       },
     ],
   },

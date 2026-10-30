@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import EloAvatar from "../components/EloAvatar.astro";
 import {
   SITE,
   STEPS,
@@ -77,16 +78,12 @@ const jsonLd = [
 
           <div class="phone__score">
             <div class="phone__player phone__player--left">
-              <span class="avatar-ring avatar-ring--gold">
-                <img src="/avatars/manon.svg" alt="" />
-              </span>
+              <EloAvatar tier="OR" seed="Manon" bg="ffd9a0" size={40} surface="#000" />
               <span>63</span>
             </div>
             <span class="phone__vs">0</span>
             <div class="phone__player phone__player--right">
-              <span class="avatar-ring avatar-ring--platinum">
-                <img src="/avatars/idriss.svg" alt="" />
-              </span>
+              <EloAvatar tier="PLATINE" seed="Idriss" bg="c0e8ff" size={40} surface="#000" />
               <span>38</span>
             </div>
           </div>
@@ -140,9 +137,13 @@ const jsonLd = [
       <div class="ranks">
         {RANKS.map((rank) => (
           <div class="rank">
-            <div class:list={["rank__avatar", "avatar-ring", `avatar-ring--${rank.ring}`]}>
-              {rank.avatar && <img src={`/avatars/${rank.avatar}.svg`} alt="" />}
-            </div>
+            <EloAvatar
+              tier={rank.tier}
+              seed={rank.seed}
+              bg={rank.bg}
+              size={84}
+              surface="var(--jo-warm)"
+            />
             <div style={`--rank-label: ${rank.labelColor}`}>
               <span class="rank__name">{rank.name}</span>
               <span class="rank__elo">{rank.elo}</span>
@@ -181,7 +182,7 @@ const jsonLd = [
       <div class="modes">
         {MODES.map((mode) => (
           <article class="mode">
-            <i class={mode.icon}></i>
+            <i class={`ph ${mode.icon}`}></i>
             <h3>{mode.title}</h3>
             <p>{mode.text}</p>
           </article>
