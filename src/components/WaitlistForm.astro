@@ -1,0 +1,39 @@
+---
+import { SITE } from "../data/site";
+
+export interface Props {
+  id?: string;
+  compact?: boolean;
+}
+
+const { id = "waitlist" } = Astro.props;
+const endpoint = import.meta.env.PUBLIC_WAITLIST_ENDPOINT ?? "";
+---
+
+<form
+  id={id}
+  class="waitlist-form"
+  data-form
+  data-endpoint={endpoint}
+  data-fallback-email={SITE.email}
+  data-form-kind="waitlist"
+  novalidate
+>
+  <label for={`${id}-email`}>Ton e-mail</label>
+  <div class="waitlist-form__row">
+    <input
+      id={`${id}-email`}
+      name="email"
+      type="email"
+      inputmode="email"
+      autocomplete="email"
+      placeholder="toi@exemple.fr"
+      required
+    />
+    <button class="btn btn--primary" type="submit">Me prévenir</button>
+  </div>
+  <p class="waitlist-form__note">
+    Un seul e-mail au lancement. Pas de spam, désinscription en un clic.
+  </p>
+  <p class="waitlist-form__status" data-form-status role="status" aria-live="polite"></p>
+</form>

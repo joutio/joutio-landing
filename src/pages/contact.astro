@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import ContactForm from "../components/ContactForm.astro";
+import { SITE } from "../data/site";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Une question, un bug, un partenariat ? Écris à l'équipe Joutio."
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Écris-nous."
+    description="On répond en général sous deux jours ouvrés. Pour supprimer ton compte, passe plutôt par les réglages de l'appli."
+  />
+
+  <div class="container">
+    <div class="plan" style="padding:48px 0 72px">
+      <ContactForm />
+
+      <div>
+        <h2>Le plus direct</h2>
+        <p class="muted">
+          Pour le support, les données personnelles ou une question sur le jeu :
+        </p>
+        <p>
+          <a class="btn btn--secondary" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </p>
+
+        <h2 style="margin-top:40px">Presse</h2>
+        <p class="muted">
+          Interviews, chiffres, accès anticipé :
+        </p>
+        <p>
+          <a class="btn btn--secondary" href={`mailto:${SITE.pressEmail}`}>{SITE.pressEmail}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

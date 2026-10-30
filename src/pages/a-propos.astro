@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { SITE } from "../data/site";
+---
+
+<BaseLayout
+  title="À propos"
+  description="Joutio est né d'une envie simple : retrouver la tension d'un duel de culture générale entre amis, sur téléphone, en une minute."
+>
+  <PageHero
+    eyebrow="À propos"
+    title="Un quiz où l'on joue contre quelqu'un, pas contre une liste."
+    description="Joutio est né d'une envie simple : retrouver la tension d'un duel de culture générale entre amis, sur téléphone, en une minute. Pas de vies, pas d'énergie à recharger. Une question, dix secondes, et quelqu'un en face."
+  />
+
+  <div class="container">
+    <div class="prose">
+      <h2>Des questions vérifiées</h2>
+      <p>
+        Chaque sujet est relu avant publication. Une erreur se signale en un
+        geste depuis l'écran de résultat. Les créateurs de sujets peuvent
+        approuver ou rejeter les questions proposées par leur équipe.
+      </p>
+
+      <h2>Un jeu équitable</h2>
+      <p>
+        Le chrono est tenu par le serveur, pas par ton téléphone. Premium ne
+        donnera aucun avantage en duel : même chrono, mêmes questions, même Elo.
+      </p>
+
+      <h2>Peu de données</h2>
+      <p>
+        Pas de mot de passe, pas de vente de données. Ton compte se supprime
+        depuis les réglages, immédiatement. La landing n'utilise ni cookie
+        publicitaire ni traceur de mesure d'audience tiers.
+      </p>
+
+      <h2>Une idée de sujet, une question, un partenariat ?</h2>
+      <p>
+        Écris-nous à <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. On répond
+        en général sous deux jours ouvrés.
+      </p>
+
+      <p style="margin-top:32px">
+        <a class="btn btn--primary" href="/#waitlist">Rejoindre la liste d'attente</a>
+        <a class="btn btn--ghost" href={SITE.appUrl}>Jouer sur le web</a>
+      </p>
+    </div>
+  </div>
+</BaseLayout>

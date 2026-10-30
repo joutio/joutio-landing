@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { SITE } from "../data/site";
+---
+
+<BaseLayout
+  title="Presse"
+  description="Interviews, chiffres et accès anticipé : contacte l'équipe presse de Joutio."
+>
+  <PageHero
+    eyebrow="Presse"
+    title="Parler de Joutio."
+    description="Interviews, chiffres, accès anticipé : écris-nous. On répond en général sous deux jours ouvrés."
+  />
+
+  <div class="container">
+    <div class="prose">
+      <h2>Contact presse</h2>
+      <p>
+        <a class="btn btn--primary" href={`mailto:${SITE.pressEmail}`}>{SITE.pressEmail}</a>
+      </p>
+
+      <h2>Kit presse</h2>
+      <p>
+        Les logos, captures d'écran et le guide de marque seront publiés ici
+        avant le lancement. En attendant, demande-les par e-mail.
+      </p>
+      <ul>
+        <li>Logos — SVG, PNG</li>
+        <li>Captures d'écran — Android, iOS, web</li>
+        <li>Guide de marque — PDF</li>
+      </ul>
+
+      <div class="notice">
+        <span aria-hidden="true">ⓘ</span>
+        <span>
+          Aucun avatar de joueur réel n'est utilisé dans les supports de presse.
+          Les captures utilisent des profils de démonstration.
+        </span>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

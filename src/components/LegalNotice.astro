@@ -1,0 +1,20 @@
+---
+import { LEGAL } from "../data/legal";
+
+interface Props {
+  page: string;
+}
+
+const { page } = Astro.props;
+---
+
+{!LEGAL.ready && (
+  <div class="notice">
+    <span aria-hidden="true">⚠</span>
+    <span>
+      <strong>Version de travail.</strong> Les informations société de cette page
+      ({page}) ne sont pas encore renseignées. Elle reste en <code>noindex</code>
+      jusqu'à validation.
+    </span>
+  </div>
+)}

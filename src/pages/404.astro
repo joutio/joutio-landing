@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+---
+
+<BaseLayout
+  title="Page introuvable"
+  description="Cette page n'existe pas ou a été déplacée."
+  noindex
+>
+  <PageHero
+    eyebrow="404"
+    title="Cette page n'existe pas."
+    description="Le lien est peut-être cassé, ou la page a été déplacée. Retourne à l'accueil ou rejoins la liste d'attente."
+  />
+
+  <div class="container">
+    <p style="padding:32px 0 80px;display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn btn--primary" href="/">Retour à l'accueil</a>
+      <a class="btn btn--secondary" href="/#waitlist">Rejoindre la liste d'attente</a>
+    </p>
+  </div>
+</BaseLayout>

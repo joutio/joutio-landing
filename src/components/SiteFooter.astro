@@ -1,0 +1,36 @@
+---
+import { FOOTER_LINKS } from "../data/site";
+import { LEGAL } from "../data/legal";
+import Logo from "./Logo.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <Logo size={28} />
+        <p>Le quiz qui se joue à deux.</p>
+      </div>
+
+      {FOOTER_LINKS.map((column, index) => (
+        <div class:list={["site-footer__col", index === 2 && "site-footer__col--wide"]}>
+          <b>{column.title}</b>
+          {column.links.map((link) =>
+            link.href === "/#waitlist" ? (
+              <a href={link.href} data-open-waitlist>{link.label}</a>
+            ) : (
+              <a href={link.href}>{link.label}</a>
+            ),
+          )}
+        </div>
+      ))}
+    </div>
+
+    <div class="site-footer__bottom">
+      <span>© {year} {LEGAL.entity}</span>
+      <a href="/cookies/">Gérer les cookies</a>
+    </div>
+  </div>
+</footer>

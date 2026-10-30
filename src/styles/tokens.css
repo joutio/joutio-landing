@@ -1,0 +1,143 @@
+/* Joutio — jetons de la landing.
+   Source de vérité : design/tokens.json (design system 2.1).
+   La landing reprend le thème sombre de `Joutio Site.dc.html` (data-theme="dark")
+   pour coller à la maquette ; le thème clair reste disponible via
+   data-theme="light" pour les surfaces institutionnelles. */
+
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/geist-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/geist-mono-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  --jo-bg: #f6f5f1;
+  --jo-canvas: #dedbd2;
+  --jo-surface: #ffffff;
+  --jo-raised: #efede7;
+  --jo-hover: #e5e2da;
+  --jo-border: #d9d6cd;
+  --jo-warm: #eee9dc;
+  --jo-text: #121210;
+  --jo-muted: #64625c;
+  --jo-accent: #e8b04a;
+  --jo-accent-press: #c9963c;
+  --jo-accent-ink: #8a5e0f;
+  --jo-on-accent: #000000;
+  --jo-correct: #2e8a5f;
+  --jo-wrong: #c2433a;
+  --jo-glass: rgba(255, 255, 255, 0.8);
+  --jo-scrim: rgba(18, 18, 16, 0.4);
+  --jo-shadow: 0 12px 32px rgba(60, 50, 20, 0.12);
+  --jo-shadow-lg: 0 16px 48px rgba(19, 18, 9, 0.18);
+
+  --jo-tier-fer: #3f444c;
+  --jo-tier-bronze: #b86a32;
+  --jo-tier-argent: #8c95a3;
+  --jo-tier-or: #d9a826;
+  --jo-tier-platine: #8c9fc9;
+  --jo-tier-emeraude: #2fbf77;
+  --jo-tier-diamant: #5db4e2;
+
+  --jo-cat-sports: #46c6cd;
+  --jo-cat-education: #4dc3dd;
+  --jo-cat-science: #5dbee9;
+  --jo-cat-technology: #79b6f4;
+  --jo-cat-entertainment: #96aef7;
+  --jo-cat-literature: #b0a5f2;
+  --jo-cat-arts: #c79de6;
+  --jo-cat-music: #d997d2;
+  --jo-cat-movies: #e694bb;
+  --jo-cat-television: #ec93a8;
+  --jo-cat-food: #ed997b;
+  --jo-cat-history: #e79e6b;
+  --jo-cat-games: #bbb55e;
+  --jo-cat-nature: #a1bd6e;
+  --jo-cat-business: #5fc8a6;
+  --jo-cat-world: #4dc8ba;
+  --jo-cat-general: #b1b1b1;
+
+  --jo-font-sans: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --jo-font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --jo-space-0: 0;
+  --jo-space-1: 2px;
+  --jo-space-2: 4px;
+  --jo-space-3: 8px;
+  --jo-space-4: 12px;
+  --jo-space-5: 16px;
+  --jo-space-6: 24px;
+  --jo-space-7: 32px;
+  --jo-space-8: 40px;
+  --jo-space-9: 48px;
+  --jo-space-10: 64px;
+  --jo-space-11: 80px;
+  --jo-space-12: 96px;
+
+  --jo-radius-xs: 4px;
+  --jo-radius-sm: 8px;
+  --jo-radius-md: 12px;
+  --jo-radius-lg: 16px;
+  --jo-radius-xl: 24px;
+  --jo-radius-full: 9999px;
+
+  --jo-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --jo-ease-exit: cubic-bezier(0.55, 0, 0.85, 0.2);
+  --jo-ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --jo-duration: 500ms;
+  --jo-duration-fast: 250ms;
+  --jo-duration-reveal: 700ms;
+
+  --jo-z-nav: 10;
+  --jo-z-overlay: 20;
+  --jo-z-toast: 30;
+
+  --jo-max: 1120px;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --jo-bg: #000000;
+  --jo-canvas: #0c0c0b;
+  --jo-surface: #181818;
+  --jo-raised: #1f1f1f;
+  --jo-hover: #272727;
+  --jo-border: #313131;
+  --jo-warm: #131209;
+  --jo-text: #ffffff;
+  --jo-muted: #9b9b9b;
+  --jo-accent: #e8b04a;
+  --jo-accent-press: #c9963c;
+  --jo-accent-ink: #e8b04a;
+  --jo-on-accent: #000000;
+  --jo-correct: #4fb286;
+  --jo-wrong: #e5645a;
+  --jo-glass: rgba(16, 16, 16, 0.78);
+  --jo-scrim: rgba(0, 0, 0, 0.6);
+  --jo-shadow: 0 16px 48px rgba(19, 18, 9, 0.6);
+  --jo-shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

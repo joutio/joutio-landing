@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { LEGAL } from "../data/legal";
+---
+
+<BaseLayout
+  title="Cookies"
+  description="La landing Joutio n'utilise ni cookie publicitaire ni traceur de mesure d'audience tiers."
+  noindex={!LEGAL.ready}
+>
+  <PageHero
+    eyebrow="Juridique"
+    title="Cookies"
+    description={`Dernière mise à jour : ${LEGAL.updatedAt}.`}
+  />
+
+  <div class="container">
+    <div class="prose">
+      <h2>Ce que nous utilisons</h2>
+      <p>
+        La landing <strong>joutio.com</strong> ne dépose aucun cookie
+        publicitaire et n'utilise aucun traceur de mesure d'audience tiers. Il
+        n'y a donc pas de bandeau de consentement publicitaire.
+      </p>
+      <p>
+        Les formulaires de liste d'attente et de contact transmettent uniquement
+        l'adresse e-mail et le message que tu saisis, pour te répondre ou te
+        prévenir du lancement. Ces données ne sont pas revendues.
+      </p>
+
+      <h2>Cookies strictement nécessaires</h2>
+      <p>
+        L'hébergement peut journaliser les requêtes (adresse IP, date, URL) pour
+        la sécurité et le diagnostic, sans profilage publicitaire. Ces journaux
+        sont conservés pour une durée limitée.
+      </p>
+
+      <h2>Services tiers</h2>
+      <p>
+        Si un service d'envoi d'e-mail (Brevo, Resend) est utilisé pour la liste
+        d'attente, il peut déposer ses propres cookies sur sa page de
+        confirmation. Ces cookies relèvent de la politique de ce service.
+      </p>
+
+      <h2>Gérer tes choix</h2>
+      <p>
+        Comme aucun traceur publicitaire n'est déposé, il n'y a pas de choix à
+        exprimer sur cette page. Tu peux nous écrire à{" "}
+        <a href={`mailto:${LEGAL.contactEmail}`}>{LEGAL.contactEmail}</a> pour
+        toute question.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

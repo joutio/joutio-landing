@@ -1,0 +1,45 @@
+---
+import { SITE } from "../data/site";
+
+const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? "";
+---
+
+<form
+  class="waitlist-form"
+  data-form
+  data-endpoint={endpoint}
+  data-fallback-email={SITE.email}
+  data-form-kind="contact"
+  novalidate
+>
+  <label for="contact-email">Ton e-mail</label>
+  <input
+    id="contact-email"
+    name="email"
+    type="email"
+    inputmode="email"
+    autocomplete="email"
+    placeholder="toi@exemple.fr"
+    required
+  />
+
+  <label for="contact-subject">Sujet</label>
+  <select id="contact-subject" name="subject">
+    <option>Support</option>
+    <option>Presse</option>
+    <option>Partenariat</option>
+    <option>Signaler une erreur</option>
+  </select>
+
+  <label for="contact-message">Message</label>
+  <textarea
+    id="contact-message"
+    name="message"
+    rows="5"
+    placeholder="Dis-nous tout."
+    required
+  ></textarea>
+
+  <button class="btn btn--primary" type="submit">Envoyer le message</button>
+  <p class="waitlist-form__status" data-form-status role="status" aria-live="polite"></p>
+</form>

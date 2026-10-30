@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import FaqList from "../components/FaqList.astro";
+import { FAQ, SITE } from "../data/site";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.flatMap((group) =>
+    group.items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  ),
+};
+---
+
+<BaseLayout
+  title="Questions fréquentes"
+  description="Comment se déroule un duel, comment fonctionne l'Elo, comment supprimer ton compte : les réponses aux questions les plus fréquentes."
+  jsonLd={jsonLd}
+>
+  <PageHero
+    eyebrow="FAQ"
+    title="Questions fréquentes"
+    description="Tout ce qu'on nous demande sur le duel, la progression et le compte. Si ta question n'est pas là, écris-nous."
+  />
+
+  <div class="container">
+    <FaqList groups={FAQ} openFirst={false} />
+
+    <p style="margin:40px 0 72px">
+      Pas de réponse ici ? <a href={`mailto:${SITE.email}`}>Écris-nous</a>.
+    </p>
+  </div>
+</BaseLayout>
