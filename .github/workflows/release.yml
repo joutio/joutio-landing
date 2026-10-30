@@ -1,0 +1,17 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - ".github/workflows/**"
+      - "**.md"
+
+jobs:
+  release:
+    uses: joutio/joutio-reusable-workflows/.github/workflows/frontend-release.yml@main
+    with:
+      github-username: ${{ vars.JOUTIO_GITHUB_USERNAME }}
+      service-name: joutio-landing
+    secrets:
+      GITHUB_PASSWORD: ${{ secrets.JOUTIO_GITHUB_TOKEN }}
