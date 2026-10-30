@@ -1,0 +1,16 @@
+## 1.0.0 (2026-10-30)
+
+### Features
+
+* **contact:** preselect the Presse subject from [#presse](https://github.com/joutio/joutio-landing/issues/presse) ([93eba51](https://github.com/joutio/joutio-landing/commit/93eba518c00c87ddc3ccb1104239832948e6f9a7))
+* Joutio landing (Astro) aligned with design system 2.1 ([5f255d6](https://github.com/joutio/joutio-landing/commit/5f255d6c2ce30e96c908af0c00d92b8aee487e9c))
+* **legal:** serve terms, privacy and data deletion on joutio.com ([3b12013](https://github.com/joutio/joutio-landing/commit/3b120139c00bc361badc84fdeec4e82774277bab))
+* **site:** match Joutio Site pages exactly (FAQ, about, press, contact, premium) ([bf118ea](https://github.com/joutio/joutio-landing/commit/bf118ea5605810c66e1312a4a36ab301745a6cf9))
+* **site:** merge press into contact page ([bd192d8](https://github.com/joutio/joutio-landing/commit/bd192d8ea0a0b5dae17bc68b57cdbf8db5bff58b))
+
+### Bug Fixes
+
+* **header:** exact glass color and backdrop blur ([aea2b17](https://github.com/joutio/joutio-landing/commit/aea2b1774fa7749521cdc1f6a2c03da5c91c66fc))
+* **hero:** match phone category chip line-height ([17d0a5a](https://github.com/joutio/joutio-landing/commit/17d0a5aa8b32bdb09257df043f96f2357c0dd5ca))
+* **legal:** spacing in legal notice ([a342de2](https://github.com/joutio/joutio-landing/commit/a342de24325d5eb411d73b33d0985b04637a3434))
+* **nav:** Comment jouer links home without an anchor ([7c62c40](https://github.com/joutio/joutio-landing/commit/7c62c403928a8d9a4d2551d82df8d95e4ddc9473))
