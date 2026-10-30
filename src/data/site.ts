@@ -15,7 +15,7 @@ export const NAV = [
   { label: "Premium", href: "/premium/" },
   { label: "FAQ", href: "/faq/" },
   { label: "À propos", href: "/a-propos/" },
-  { label: "Presse", href: "/presse/" },
+  { label: "Presse", href: "/contact/#presse" },
 ] as const;
 
 export const STEPS = [
@@ -160,7 +160,7 @@ export const FOOTER_LINKS = [
     title: "Joutio",
     links: [
       { label: "À propos", href: "/a-propos/" },
-      { label: "Presse", href: "/presse/" },
+      { label: "Presse", href: "/contact/#presse" },
       { label: "Contact", href: "/contact/" },
       { label: "FAQ", href: "/faq/" },
     ],

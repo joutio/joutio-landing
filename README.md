@@ -30,7 +30,7 @@ src/
   components/     header, footer, waitlist, blocs de section
   data/           contenu éditorial (FAQ, catégories, rangs, modes, légal)
   layouts/        BaseLayout (meta, OG, JSON-LD)
-  pages/          /, /a-propos, /faq, /premium, /contact, /presse,
+  pages/          /, /a-propos, /faq, /premium, /contact (+ section Presse),
                   /mentions-legales, /cookies, /join/[roomId], 404
   styles/         tokens.css (source : design/tokens.json), global.css
 public/

@@ -17,4 +17,7 @@ export default defineConfig({
     format: "directory",
   },
   integrations: [sitemap()],
+  redirects: {
+    "/presse": "/contact/#presse",
+  },
 });

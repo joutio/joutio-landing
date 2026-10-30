@@ -5,8 +5,9 @@ import Logo from "./Logo.astro";
 const path = Astro.url.pathname;
 
 function isCurrent(href: string) {
-  if (href.startsWith("/#")) return path === "/";
-  return path === href || path === href.replace(/\/$/, "");
+  const target = href.split("#")[0] || "/";
+  if (target === "/") return path === "/";
+  return path === target || path === target.replace(/\/$/, "");
 }
 ---
 
