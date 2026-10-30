@@ -11,7 +11,7 @@ export const SITE = {
 } as const;
 
 export const NAV = [
-  { label: "Comment jouer", href: "/#comment-jouer" },
+  { label: "Comment jouer", href: "/" },
   { label: "Premium", href: "/premium/" },
   { label: "FAQ", href: "/faq/" },
   { label: "À propos", href: "/a-propos/" },
