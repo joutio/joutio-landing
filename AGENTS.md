@@ -32,7 +32,8 @@ reste la seule surface applicative.
 ## À ne pas faire
 
 - Ajouter un prix Premium, une pub ou un ATT tant que l'IAP n'est pas livré.
-- Dupliquer les pages légales de `joutio-web` : redirects vers `app.joutio.com`
-  pour privacy/terms/data-deletion.
+- Dupliquer les pages légales de `joutio-web` : la landing porte les URLs
+  publiques `/terms`, `/privacy`, `/data-deletion` pour les stores. Mettre à
+  jour les deux versions si un texte change.
 - Committer une empreinte SHA-256 de keystore en clair : utiliser
   `ANDROID_SHA256` au build.

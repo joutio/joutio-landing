@@ -5,9 +5,9 @@ import sitemap from "@astrojs/sitemap";
  * Landing publique de Joutio — site statique, hébergé sur le k3s derrière
  * l'ingress `joutio.com` (voir devops/joutio-gitops).
  *
- * Les pages légales restent la source de vérité de `joutio-web` pour le
- * moment : `/privacy`, `/terms` et `/data-deletion` redirigent vers
- * `app.joutio.com`. Les mentions légales et la page cookies vivent ici.
+ * Les pages légales publiques (`/mentions-legales`, `/terms`, `/privacy`,
+ * `/cookies`, `/data-deletion`) vivent ici, sur joutio.com. `app.joutio.com`
+ * reste l'application ; les URLs légales des stores pointent vers ce site.
  */
 export default defineConfig({
   site: "https://joutio.com",
@@ -17,9 +17,4 @@ export default defineConfig({
     format: "directory",
   },
   integrations: [sitemap()],
-  redirects: {
-    "/privacy": "https://app.joutio.com/privacy",
-    "/terms": "https://app.joutio.com/terms",
-    "/data-deletion": "https://app.joutio.com/data-deletion",
-  },
 });

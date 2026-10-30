@@ -47,9 +47,9 @@ public/
 - **Téléchargement** : liste d'attente (l'APK reste distribué séparément aux
   testeurs). Les boutons « Télécharger » / badges store ouvrent la boîte de dialogue
   de liste d'attente, pas un store.
-- **Légal** : `/privacy`, `/terms`, `/data-deletion` redirigent vers
-  `app.joutio.com` (source de vérité `joutio-web`). Les mentions légales et la
-  page cookies sont ici, avec les informations société à compléter.
+- **Légal** : `/mentions-legales`, `/terms`, `/privacy`, `/cookies` et
+  `/data-deletion` sont servis par la landing, sur `joutio.com` — ce sont les
+  URLs à déclarer aux stores. Les informations société restent à compléter.
 - **App Links** : `joutio.com/join/{roomId}` ouvre l'app Android quand
   `ANDROID_SHA256` est configuré.
 
