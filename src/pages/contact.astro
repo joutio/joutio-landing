@@ -45,7 +45,7 @@ const subjects = ["Support", "Presse", "Partenariat", "Signaler une erreur"];
           </label>
         </div>
 
-        <div class="contact-form__field">
+        <div class="contact-form__field" id="presse">
           <span class="contact-form__label">Sujet</span>
           <div class="contact-form__chips">
             {subjects.map((subject, index) => (
@@ -72,7 +72,7 @@ const subjects = ["Support", "Presse", "Partenariat", "Signaler une erreur"];
       </form>
     </div>
 
-    <div class="contact-page__right" id="presse">
+    <div class="contact-page__right">
       <div class="contact-card">
         <b class="contact-card__title">Presse</b>
         <p>
@@ -123,6 +123,19 @@ const subjects = ["Support", "Presse", "Partenariat", "Signaler une erreur"];
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  const selectSubjectFromHash = () => {
+    if (window.location.hash !== "#presse") return;
+    const radio = document.querySelector<HTMLInputElement>(
+      'input[name="subject"][value="Presse"]',
+    );
+    if (radio) radio.checked = true;
+  };
+
+  selectSubjectFromHash();
+  window.addEventListener("hashchange", selectSubjectFromHash);
+</script>
 
 <style>
   .contact-page {
@@ -220,6 +233,10 @@ const subjects = ["Support", "Presse", "Partenariat", "Signaler une erreur"];
     gap: 8px;
   }
 
+  #presse {
+    scroll-margin-top: 88px;
+  }
+
   .contact-chip {
     position: relative;
     display: block;
@@ -272,7 +289,6 @@ const subjects = ["Support", "Presse", "Partenariat", "Signaler une erreur"];
     display: grid;
     gap: 16px;
     align-content: start;
-    scroll-margin-top: 88px;
   }
 
   .contact-card {
