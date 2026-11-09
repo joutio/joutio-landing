@@ -9,7 +9,7 @@ reste la seule surface applicative.
 ## Stack
 
 - Astro statique, TypeScript strict, aucune UI framework côté client.
-- Tokens : `src/styles/tokens.css` (source `design/tokens.json`), **thème sombre par
+- Tokens : `src/styles/tokens.css` (source `../../claude-design`), **thème sombre par
   défaut** (`data-theme="dark"`), thème clair conservé pour les surfaces institutionnelles.
 - Polices Geist/Geist Mono auto-hébergées (`public/fonts/`), icônes Phosphor
   (`public/icons/`), avatars de démonstration DiceBear locaux (`public/avatars/`).
