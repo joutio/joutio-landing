@@ -1,7 +1,7 @@
 ---
 /**
  * Les sept rangs (`RankStrip` du lab) : avatar encadré, nom du rang, seuil d'Elo. En compact, la rangée défile
- * (aimantée) : flèches latérales et points de page signalent la suite ; `src/scripts/site.ts` les tient à jour.
+ * (aimantée) : des flèches latérales signalent la suite ; `src/scripts/site.ts` les tient à jour.
  * La zone de défilement déborde de 20 px en haut et en bas pour ne pas rogner le halo des cadres.
  */
 import { RANKS } from "../data/site";
@@ -38,5 +38,4 @@ const arrow = cn(iconButtonStyles({ variant: "gray", size: "S" }), "absolute top
   <button type="button" class={cn(arrow, "-right-2")} aria-label="Rangs suivants" data-rank-next hidden>
     <Icon name="caret-right" size={18} />
   </button>
-  <div role="img" class="flex items-center justify-center gap-1.5 @3xl:hidden" data-rank-dots hidden></div>
 </div>
