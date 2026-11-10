@@ -41,3 +41,41 @@ if (header && menu && button) {
     }
   });
 }
+
+/**
+ * Rangée des rangs (`RankStrip`) en compact : points de page (`PageDots` du lab) et flèches, masquées en début
+ * ou en fin de rangée. Au-delà de 768 px, la rangée tient sur une ligne : rien à afficher.
+ */
+const DOT = "jo-transition h-1.5 rounded-jo-xs";
+
+for (const strip of document.querySelectorAll<HTMLElement>("[data-rank-strip]")) {
+  const scroller = strip.querySelector<HTMLElement>("[data-rank-scroller]");
+  const prev = strip.querySelector<HTMLButtonElement>("[data-rank-prev]");
+  const next = strip.querySelector<HTMLButtonElement>("[data-rank-next]");
+  const dots = strip.querySelector<HTMLElement>("[data-rank-dots]");
+  if (!scroller || !prev || !next || !dots) continue;
+
+  const update = () => {
+    const count = Math.max(1, Math.ceil(scroller.scrollWidth / scroller.clientWidth - 0.05));
+    const atEnd = scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 2;
+    const index = atEnd ? count - 1 : Math.min(count - 1, Math.round(scroller.scrollLeft / scroller.clientWidth));
+    const scrollable = count > 1;
+    prev.hidden = next.hidden = dots.hidden = !scrollable;
+    prev.classList.toggle("invisible", index === 0);
+    next.classList.toggle("invisible", index === count - 1);
+    dots.setAttribute("aria-label", `${index + 1} sur ${count}`);
+    dots.replaceChildren(
+      ...Array.from({ length: count }, (_, dot) => {
+        const span = document.createElement("span");
+        span.className = `${DOT} ${dot === index ? "w-5 bg-jo-accent" : dot < index ? "w-1.5 bg-jo-muted" : "w-1.5 bg-jo-border"}`;
+        return span;
+      }),
+    );
+  };
+  const go = (direction: 1 | -1) => scroller.scrollBy({ left: direction * scroller.clientWidth * 0.8, behavior: "smooth" });
+  prev.addEventListener("click", () => go(-1));
+  next.addEventListener("click", () => go(1));
+  scroller.addEventListener("scroll", update, { passive: true });
+  new ResizeObserver(update).observe(scroller);
+  update();
+}
