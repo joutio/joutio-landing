@@ -1,3 +1,11 @@
+## [1.1.0](https://github.com/joutio/joutio-landing/compare/v1.0.0...v1.1.0) (2026-11-10)
+
+### Features
+
+* **design:** rank strip keeps side arrows only, no page dots ([a6dba4b](https://github.com/joutio/joutio-landing/commit/a6dba4bc8444c550f0ddc17c88eb5d689a2ca561))
+* **design:** rank strip pages in compact, equal store buttons, final reveal hero capture ([6e14c62](https://github.com/joutio/joutio-landing/commit/6e14c620a58b7984514d44ae84825093391892df))
+* **design:** rebuild the landing from the validated design lab pages ([a9da010](https://github.com/joutio/joutio-landing/commit/a9da010eee9593c0ce2bd2d14d872fd8498c9975))
+
 ## 1.0.0 (2026-10-30)
 
 ### Features
