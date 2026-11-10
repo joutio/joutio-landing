@@ -1,21 +1,22 @@
 ---
-export interface Props {
+/** Logo de Joutio (`Logo` du lab) : la marque, et le mot-symbole en texte DOM qui suit le thème. */
+interface Props {
+  variant?: "mark" | "lockup";
+  /** Hauteur en px. */
   size?: number;
-  withWordmark?: boolean;
-  class?: string;
 }
-
-const { size = 34, withWordmark = true, class: className } = Astro.props;
+const { variant = "mark", size = 32 } = Astro.props;
 ---
 
-<span class:list={["brand", className]}>
-  <img
-    class="brand-mark"
-    src="/logo-mark.svg"
-    alt=""
-    width={size}
-    height={size}
-    aria-hidden="true"
-  />
-  {withWordmark && <span>joutio</span>}
-</span>
+{
+  variant === "mark" ? (
+    <img src="/brand/logo-mark.svg" alt="Joutio" style={`height:${size}px`} />
+  ) : (
+    <span class="inline-flex items-center" style={`gap:${size * 0.24}px`}>
+      <img src="/brand/logo-mark.svg" alt="" style={`height:${size}px`} />
+      <span class="font-sans font-bold tracking-tight text-jo-text" style={`font-size:${size * 0.64}px;line-height:1`}>
+        joutio
+      </span>
+    </span>
+  )
+}

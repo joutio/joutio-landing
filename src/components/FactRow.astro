@@ -1,0 +1,20 @@
+---
+/** Faits à icône (`FactRow` du lab). */
+import Icon from "./Icon.astro";
+
+interface Props {
+  facts: readonly { icon: string; text: string }[];
+}
+const { facts } = Astro.props;
+---
+
+<ul class="flex flex-wrap gap-x-8 gap-y-3">
+  {
+    facts.map((fact) => (
+      <li class="jo-type-callout flex items-center gap-2 text-jo-muted">
+        <Icon name={fact.icon} class="text-jo-accent-ink" />
+        {fact.text}
+      </li>
+    ))
+  }
+</ul>

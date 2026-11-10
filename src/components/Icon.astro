@@ -1,0 +1,39 @@
+---
+/**
+ * Icône Phosphor en SVG au build (`@phosphor-icons/core`), mêmes noms et graisses que le lab. Aucun JavaScript,
+ * aucune police d'icônes.
+ */
+import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+
+interface Props {
+  name: string;
+  weight?: "regular" | "fill" | "bold";
+  size?: number;
+  class?: string;
+  /** Libellé : sans lui, l'icône est décorative (`aria-hidden`). */
+  label?: string;
+  [key: string]: unknown;
+}
+
+const { name, weight = "regular", size = 20, class: className, label, ...rest } = Astro.props;
+const require = createRequire(import.meta.url);
+const file = weight === "regular" ? `${name}.svg` : `${name}-${weight}.svg`;
+const raw = readFileSync(require.resolve(`@phosphor-icons/core/assets/${weight}/${file}`), "utf8");
+const inner = raw.replace(/^[\s\S]*?<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 256 256"
+  width={size}
+  height={size}
+  fill="currentColor"
+  class={className}
+  role={label ? "img" : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : "true"}
+  focusable="false"
+  {...rest}
+  set:html={inner}
+/>

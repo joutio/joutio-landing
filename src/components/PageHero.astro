@@ -1,17 +1,21 @@
 ---
-export interface Props {
+/** En-tête d'une page secondaire (`PageHero` du lab) : surtitre, titre `display`, chapeau, contenu dessous. */
+import SiteInner from "./SiteInner.astro";
+
+interface Props {
   eyebrow?: string;
   title: string;
-  description?: string;
+  lede?: string;
 }
-
-const { eyebrow, title, description } = Astro.props;
+const { eyebrow, title, lede } = Astro.props;
 ---
 
-<section class="page-hero">
-  <div class="page-hero__inner">
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    <h1>{title}</h1>
-    {description && <p>{description}</p>}
-  </div>
+<section class="pt-12 pb-8 @5xl:pt-20 @5xl:pb-12">
+  <SiteInner class="grid gap-4">
+    {eyebrow && <p class="jo-type-caption font-semibold text-jo-accent-ink">{eyebrow}</p>}
+    <h1 class="jo-type-display max-w-[880px] text-balance">{title}</h1>
+    {lede && <p class="jo-type-body max-w-[640px] text-pretty text-jo-muted">{lede}</p>}
+    {Astro.slots.has("lede") && <p class="jo-type-body max-w-[640px] text-pretty text-jo-muted"><slot name="lede" /></p>}
+    <slot />
+  </SiteInner>
 </section>

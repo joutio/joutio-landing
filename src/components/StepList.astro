@@ -1,0 +1,19 @@
+---
+/** Étapes numérotées en mono (`StepList` du lab) : une colonne, puis trois. */
+interface Props {
+  steps: readonly { title: string; text: string }[];
+}
+const { steps } = Astro.props;
+---
+
+<ol class="grid gap-4 @3xl:grid-cols-3">
+  {
+    steps.map((step, index) => (
+      <li class="grid content-start gap-3 rounded-jo-lg border border-jo-border bg-jo-surface p-6">
+        <span class="jo-type-numeric font-mono text-jo-accent-ink">{String(index + 1).padStart(2, "0")}</span>
+        <h3 class="jo-type-headline">{step.title}</h3>
+        <p class="jo-type-callout text-pretty text-jo-muted">{step.text}</p>
+      </li>
+    ))
+  }
+</ol>

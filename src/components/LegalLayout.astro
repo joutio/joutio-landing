@@ -1,0 +1,33 @@
+---
+/**
+ * Page légale (`LegalLayout` du lab) : en-tête, date de mise à jour, avertissement tant que la société n'est pas
+ * renseignée, prose (`jo-site-prose`, typographie des variables de tokens).
+ */
+import { LEGAL } from "../data/legal";
+import Icon from "./Icon.astro";
+import PageHero from "./PageHero.astro";
+import SiteInner from "./SiteInner.astro";
+
+interface Props {
+  title: string;
+  /** Nom de la page dans l'avertissement ; absent, pas d'avertissement. */
+  notice?: string;
+}
+const { title, notice } = Astro.props;
+---
+
+<PageHero eyebrow="Juridique" title={title} lede={`Dernière mise à jour : ${LEGAL.updatedAt}.`} />
+<SiteInner class="grid gap-8 pb-16 @5xl:pb-24">
+  {
+    notice && !LEGAL.ready && (
+      <div role="note" class="flex gap-3 rounded-jo-md bg-jo-warm p-4 ring-1 ring-jo-border ring-inset">
+        <Icon name="warning" weight="fill" class="mt-0.5 flex-none text-jo-accent-ink" />
+        <p class="jo-type-callout text-pretty">
+          <strong class="font-semibold">Version de travail.</strong> Les informations société de cette page ({notice}) ne sont pas
+          encore renseignées. Elle reste hors index jusqu'à validation.
+        </p>
+      </div>
+    )
+  }
+  <div class="jo-site-prose"><slot /></div>
+</SiteInner>

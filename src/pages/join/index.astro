@@ -1,39 +1,38 @@
 ---
+/**
+ * Invitation à un salon (`JoinCard` du lab) : ouvre l'app (lien profond) ou le web. Le script lit l'identifiant
+ * dans `/join/{roomId}` ou `?room=` et réécrit les liens ; sans identifiant, actions inactives et erreur.
+ */
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Icon from "../../components/Icon.astro";
+import SiteInner from "../../components/SiteInner.astro";
 import { SITE } from "../../data/site";
+import { linkButtonClass } from "../../lib/button";
+import { cn } from "../../lib/cn";
 ---
 
-<BaseLayout
-  title="Rejoindre un salon"
-  description="Ouvre le salon Joutio dans l'application ou sur le web."
-  noindex
->
-  <div class="container">
-    <div class="join-card" data-join>
-      <p class="eyebrow">Invitation</p>
-      <h1>On t'invite à un duel.</h1>
-      <p>
-        Sept manches de dix secondes. Le duel démarre dès que vous êtes deux
-        dans le salon.
-      </p>
-
-      <p class="join-card__code">
-        Salon <strong data-room-id>—</strong>
-      </p>
-
-      <div class="join-card__actions">
-        <a class="btn btn--primary" data-open-app href={SITE.appUrl}>Ouvrir dans l'app</a>
-        <a class="btn btn--secondary" data-open-web href={SITE.appUrl}>Jouer sur le web</a>
+<BaseLayout title="Rejoindre un salon" description="Ouvre le salon Joutio dans l'application ou sur le web." noindex>
+  <section class="py-12 @5xl:py-24">
+    <SiteInner>
+      <div class="mx-auto grid max-w-[560px] gap-5 rounded-jo-xl border border-jo-border bg-jo-surface p-6 @3xl:p-10" data-join>
+        <p class="jo-type-caption font-semibold text-jo-accent-ink">Invitation</p>
+        <h1 class="jo-type-large-title text-balance">On t’invite à un duel.</h1>
+        <p class="jo-type-body text-pretty text-jo-muted">Sept manches de dix secondes. Le duel démarre dès que vous êtes deux dans le salon.</p>
+        <p class="jo-type-callout">Salon <strong class="font-mono font-semibold" data-room-id>—</strong></p>
+        <div class="grid gap-3 @xl:grid-flow-col @xl:justify-start">
+          <a href={SITE.appUrl} class={cn(linkButtonClass(), "aria-disabled:pointer-events-none aria-disabled:opacity-40")} data-open-app>Ouvrir dans l’app</a>
+          <a href={SITE.appUrl} class={cn(linkButtonClass({ variant: "gray" }), "aria-disabled:pointer-events-none aria-disabled:opacity-40")} data-open-web
+            >Jouer sur le web</a
+          >
+        </div>
+        <p role="status" class="jo-type-callout flex items-start gap-2 text-jo-wrong" hidden data-join-error>
+          <Icon name="warning" weight="fill" class="mt-px flex-none" />
+          Ce lien ne contient pas d’identifiant de salon. Demande un nouveau lien à ton adversaire.
+        </p>
+        <p class="jo-type-caption text-pretty text-jo-muted">Pas encore de compte ? Tu le crées en 20 secondes avec ton e-mail, sans mot de passe.</p>
       </div>
-
-      <p class="waitlist-form__status" data-join-status role="status" aria-live="polite"></p>
-
-      <p class="muted" style="font-size:13px;line-height:20px">
-        Pas encore de compte ? Tu le crées en 20 secondes avec ton e-mail, sans
-        mot de passe. Android d'abord, iOS ensuite.
-      </p>
-    </div>
-  </div>
+    </SiteInner>
+  </section>
 </BaseLayout>
 
 <script>
@@ -41,24 +40,19 @@ import { SITE } from "../../data/site";
   if (root) {
     const match = window.location.pathname.match(/\/join\/([^/]+)\/?$/);
     const roomId = match?.[1] ?? new URLSearchParams(window.location.search).get("room") ?? "";
-
-    const roomLabel = root.querySelector<HTMLElement>("[data-room-id]");
-    const openApp = root.querySelector<HTMLAnchorElement>("[data-open-app]");
-    const openWeb = root.querySelector<HTMLAnchorElement>("[data-open-web]");
-    const status = root.querySelector<HTMLElement>("[data-join-status]");
-
+    const label = root.querySelector<HTMLElement>("[data-room-id]");
+    const app = root.querySelector<HTMLAnchorElement>("[data-open-app]");
+    const web = root.querySelector<HTMLAnchorElement>("[data-open-web]");
+    const error = root.querySelector<HTMLElement>("[data-join-error]");
     if (roomId) {
-      if (roomLabel) roomLabel.textContent = roomId;
-      if (openApp) openApp.href = `joutio://join/${roomId}`;
-      if (openWeb) openWeb.href = `${location.origin.replace("joutio.com", "app.joutio.com")}/join/${roomId}`;
+      if (label) label.textContent = roomId;
+      if (app) app.href = `joutio://join/${roomId}`;
+      if (web) web.href = `${location.origin.replace("joutio.com", "app.joutio.com")}/join/${roomId}`;
     } else {
-      if (roomLabel) roomLabel.textContent = "lien incomplet";
-      if (status) {
-        status.textContent = "Ce lien ne contient pas d'identifiant de salon. Demande un nouveau lien à ton adversaire.";
-        status.dataset.tone = "error";
-      }
-      if (openApp) openApp.setAttribute("aria-disabled", "true");
-      if (openWeb) openWeb.setAttribute("aria-disabled", "true");
+      if (label) label.textContent = "lien incomplet";
+      if (error) error.hidden = false;
+      app?.setAttribute("aria-disabled", "true");
+      web?.setAttribute("aria-disabled", "true");
     }
   }
 </script>

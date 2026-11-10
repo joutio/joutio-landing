@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHero from "../components/PageHero.astro";
-import LegalNotice from "../components/LegalNotice.astro";
+import LegalLayout from "../components/LegalLayout.astro";
 import { LEGAL } from "../data/legal";
 ---
 
@@ -10,15 +9,7 @@ import { LEGAL } from "../data/legal";
   description="Les conditions qui encadrent l'utilisation de Joutio, du compte aux contenus créés par les joueurs."
   noindex={!LEGAL.ready}
 >
-  <PageHero
-    eyebrow="Juridique"
-    title="Conditions d'utilisation"
-    description={`Dernière mise à jour : ${LEGAL.updatedAt}.`}
-  />
-
-  <div class="container">
-    <div class="prose">
-      <LegalNotice page="conditions d'utilisation" />
+  <LegalLayout title="Conditions d'utilisation" notice="conditions d'utilisation">
 
       <p>
         Les présentes conditions encadrent l'utilisation du service Joutio,
@@ -135,6 +126,5 @@ import { LEGAL } from "../data/legal";
         Pour toute question, écris-nous à
         <a href={`mailto:${LEGAL.contactEmail}`}>{LEGAL.contactEmail}</a>.
       </p>
-    </div>
-  </div>
+  </LegalLayout>
 </BaseLayout>

@@ -1,0 +1,21 @@
+---
+/** Toutes les questions par groupe (`FaqGroups` du lab). */
+import type { FaqGroup } from "../data/site";
+import FaqList from "./FaqList.astro";
+
+interface Props {
+  groups: readonly FaqGroup[];
+}
+const { groups } = Astro.props;
+---
+
+<div class="grid gap-10">
+  {
+    groups.map((group, index) => (
+      <section class="grid gap-3">
+        <h2 class="jo-type-caption font-semibold text-jo-muted">{group.group}</h2>
+        <FaqList items={group.items} openFirst={index === 0} />
+      </section>
+    ))
+  }
+</div>

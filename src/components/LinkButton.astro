@@ -1,0 +1,24 @@
+---
+/** Lien au style `Button` (`LinkButton` du lab) : le site navigue plus qu'il n'agit. */
+import type { ButtonTone, ButtonVariant } from "../lib/button-styles";
+import { linkButtonClass } from "../lib/button";
+import Icon from "./Icon.astro";
+
+interface Props {
+  href: string;
+  variant?: ButtonVariant;
+  tone?: ButtonTone;
+  size?: "L" | "M" | "S";
+  icon?: string;
+  full?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+const { href, variant = "filled", tone = "accent", size = "L", icon, full, class: className, ...rest } = Astro.props;
+import { cn } from "../lib/cn";
+---
+
+<a href={href} class={cn(linkButtonClass({ variant, tone, size, full }), className)} {...rest}>
+  {icon && <Icon name={icon} size={size === "S" ? 16 : 20} />}
+  <slot />
+</a>

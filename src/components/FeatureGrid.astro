@@ -1,0 +1,26 @@
+---
+/** Cartes à icône (`FeatureGrid` du lab) : une colonne, deux, puis 3 ou 4 en desktop. */
+import type { Feature } from "../data/site";
+import Icon from "./Icon.astro";
+
+interface Props {
+  features: readonly Feature[];
+  columns?: 3 | 4;
+}
+const { features, columns = 4 } = Astro.props;
+import { cn } from "../lib/cn";
+---
+
+<ul class={cn("grid gap-4", columns === 4 ? "@xl:grid-cols-2 @5xl:grid-cols-4" : "@3xl:grid-cols-3")}>
+  {
+    features.map((feature) => (
+      <li class="grid content-start gap-3 rounded-jo-lg border border-jo-border bg-jo-surface p-6">
+        <span class="grid size-11 place-items-center rounded-jo-md bg-jo-raised text-jo-accent-ink">
+          <Icon name={feature.icon} size={24} />
+        </span>
+        <h3 class="jo-type-headline">{feature.title}</h3>
+        <p class="jo-type-callout text-pretty text-jo-muted">{feature.text}</p>
+      </li>
+    ))
+  }
+</ul>

@@ -1,0 +1,12 @@
+---
+/** Renvoi discret de fin de page (`NoteBand` du lab) : phrase + lien. */
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<div class="flex flex-col gap-4 rounded-jo-lg bg-jo-warm p-6 ring-1 ring-jo-border ring-inset @3xl:flex-row @3xl:items-center @3xl:justify-between">
+  <p class="jo-type-headline text-balance">{text}</p>
+  <slot />
+</div>

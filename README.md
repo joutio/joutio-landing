@@ -17,7 +17,7 @@ npm run check
 
 Copier `.env.example` vers `.env` :
 
-- `PUBLIC_WAITLIST_ENDPOINT` : endpoint du formulaire de liste d'attente
+- `PUBLIC_WAITLIST_ENDPOINT` : endpoint de la liste d'attente Premium
   (Brevo/Resend/BFF). Vide ⇒ repli `mailto:contact@joutio.com`.
 - `PUBLIC_CONTACT_ENDPOINT` : endpoint du formulaire de contact.
 - `ANDROID_SHA256` : empreinte SHA-256 du keystore release, pour
@@ -27,26 +27,31 @@ Copier `.env.example` vers `.env` :
 
 ```
 src/
-  components/     header, footer, waitlist, blocs de section
+  assets/         captures du hero (copiées du lab, WebP au build)
+  components/     un composant par composant du site du lab (design/src/design-system/site)
   data/           contenu éditorial (FAQ, catégories, rangs, modes, légal)
-  layouts/        BaseLayout (meta, OG, JSON-LD)
-  pages/          /, /a-propos, /faq, /premium, /contact (+ section Presse),
-                  /mentions-legales, /cookies, /join/[roomId], 404
-  styles/         tokens.css (source : design/tokens.json), global.css
+  layouts/        BaseLayout (meta, OG, JSON-LD, en-tête, pied de page)
+  lib/            cn, classes des boutons (button-styles.ts copié du lab)
+  pages/          /, /premium, /faq, /a-propos, /contact, /mentions-legales, /terms,
+                  /privacy, /cookies, /data-deletion, /join/[roomId], 404
+  scripts/        site.ts (thème, menu), forms.ts (formulaires)
+  styles/         tokens.css et site.css (copiés du lab), global.css
 public/
+  brand/          logo et cadres Elo (copiés du lab)
+  site/avatars/   avatars des rangs (copiés du lab)
   fonts/          Geist + Geist Mono (latin, auto-hébergés)
-  logo-*.svg      marque
   .well-known/    assetlinks.json (généré au build)
 ```
 
 ## Décisions produit
 
-- **Rendu** : reprise du thème sombre de `design/Joutio Site.dc.html` (data-theme="dark"),
-  tokens, Geist, icônes Phosphor, avatars de démonstration DiceBear locaux.
+- **Rendu** : traduction des pages validées du lab (`design/`, `/site/<id>`), selon
+  `design/specs/site-kit.md` (2026-11-10). Sombre par défaut, clair au choix.
 - **Premium** : annoncé « bientôt », sans prix ni achat. Aucune pub, aucun ATT.
-- **Téléchargement** : liste d'attente (l'APK reste distribué séparément aux
-  testeurs). Les boutons « Télécharger » / badges store ouvrent la boîte de dialogue
-  de liste d'attente, pas un store.
+- **Téléchargement** : action principale de l'accueil, boutons App Store et Google Play
+  (`STORE_LINKS` ; identifiant App Store à renseigner). La liste d'attente ne sert plus
+  qu'à Premium.
+- **Presse** : retirée (2026-11-10), « Contact » la remplace dans la navigation.
 - **Légal** : `/mentions-legales`, `/terms`, `/privacy`, `/cookies` et
   `/data-deletion` sont servis par la landing, sur `joutio.com` — ce sont les
   URLs à déclarer aux stores. Les informations société restent à compléter.

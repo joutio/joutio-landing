@@ -1,0 +1,15 @@
+---
+/** Issue d'un formulaire, annoncée (`role="status"`) : succès à la place du formulaire, échec en ligne. */
+import Icon from "./Icon.astro";
+
+interface Props {
+  fallbackEmail: string;
+  failure: string;
+}
+const { fallbackEmail, failure } = Astro.props;
+---
+
+<p role="status" class="jo-type-callout flex items-start gap-2 text-jo-wrong" hidden data-form-failure>
+  <Icon name="warning" weight="fill" class="mt-px flex-none" />
+  <span>{failure} <a href={`mailto:${fallbackEmail}`} class="font-semibold underline">{fallbackEmail}</a>.</span>
+</p>

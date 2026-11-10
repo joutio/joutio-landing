@@ -1,0 +1,10 @@
+---
+/** Colonne de contenu : 1 120 px au plus, gouttières 20, 32 puis 48 px (`SiteInner` du lab). */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+import { cn } from "../lib/cn";
+---
+
+<div class={cn("mx-auto w-full max-w-[1120px] px-5 @3xl:px-8 @5xl:px-12", className)}><slot /></div>

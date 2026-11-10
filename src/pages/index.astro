@@ -1,285 +1,67 @@
 ---
+/** Accueil (`/site/accueil` du lab, `design/specs/site/accueil.md`) : une seule action, télécharger l'app. */
 import BaseLayout from "../layouts/BaseLayout.astro";
-import EloAvatar from "../components/EloAvatar.astro";
-import {
-  SITE,
-  STEPS,
-  RANKS,
-  CATEGORIES,
-  MODES,
-  FAQ,
-} from "../data/site";
-
-const homeFaq = [
-  FAQ[0].items[0],
-  FAQ[2].items[0],
-  FAQ[1].items[0],
-  FAQ[2].items[1],
-];
+import CategoryCloud from "../components/CategoryCloud.astro";
+import CtaBand from "../components/CtaBand.astro";
+import FactRow from "../components/FactRow.astro";
+import FaqList from "../components/FaqList.astro";
+import FeatureGrid from "../components/FeatureGrid.astro";
+import LinkButton from "../components/LinkButton.astro";
+import PlanCompare from "../components/PlanCompare.astro";
+import RankStrip from "../components/RankStrip.astro";
+import SiteHero from "../components/SiteHero.astro";
+import SiteLink from "../components/SiteLink.astro";
+import SiteSection from "../components/SiteSection.astro";
+import StepList from "../components/StepList.astro";
+import StoreButtons from "../components/StoreButtons.astro";
+import { FAQ, FAQ_HOME, MODES, RANK_FACTS, SITE, STEPS } from "../data/site";
 
 const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Joutio",
-    url: SITE.url,
-    logo: `${SITE.url}/logo-mark.svg`,
-    email: SITE.email,
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Joutio",
-    url: SITE.url,
-    inLanguage: "fr-FR",
-    description: SITE.description,
-  },
+  { "@context": "https://schema.org", "@type": "Organization", name: "Joutio", url: SITE.url, logo: `${SITE.url}/logo-mark.svg`, email: SITE.email },
+  { "@context": "https://schema.org", "@type": "WebSite", name: "Joutio", url: SITE.url, inLanguage: "fr-FR", description: SITE.description },
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: FAQ.flatMap((group) =>
-      group.items.map((item) => ({
-        "@type": "Question",
-        name: item.q,
-        acceptedAnswer: { "@type": "Answer", text: item.a },
-      })),
-    ),
+    mainEntity: FAQ.flatMap((group) => group.items.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } }))),
   },
 ];
 ---
 
-<BaseLayout jsonLd={jsonLd}>
-  <section class="hero">
-    <div class="hero__copy">
-      <p class="hero__eyebrow">Quiz en duel · iOS, Android, web</p>
-      <h1 class="hero-title">
-        Sept questions. Dix secondes. <span>Un adversaire.</span>
-      </h1>
-      <p class="lede">
-        Choisis un sujet, défie un ami ou un joueur au hasard, et vois en direct
-        qui répond le plus vite. Chaque victoire te rapproche du rang suivant.
-      </p>
-
-      <div class="hero__actions">
-        <button class="store-badge" type="button" data-open-waitlist>
-          App Store · bientôt
-        </button>
-        <button class="store-badge" type="button" data-open-waitlist>
-          Google Play · bientôt
-        </button>
-        <a class="hero__web-link" href={SITE.appUrl}>ou jouer sur app.joutio.com</a>
-      </div>
-    </div>
-
-    <div class="hero__visual" aria-hidden="true">
-      <div class="phone">
-        <div class="phone__screen">
-          <div class="phone__timer"><i></i></div>
-
-          <div class="phone__score">
-            <div class="phone__player phone__player--left">
-              <EloAvatar tier="OR" seed="Manon" bg="ffd9a0" size={40} surface="#000" />
-              <span>63</span>
-            </div>
-            <span class="phone__vs">0</span>
-            <div class="phone__player phone__player--right">
-              <EloAvatar tier="PLATINE" seed="Idriss" bg="c0e8ff" size={40} surface="#000" />
-              <span>38</span>
-            </div>
-          </div>
-
-          <span class="phone__category">
-            <i class="ph-fill ph-bank"></i>
-            Histoire
-          </span>
-
-          <p class="phone__question">
-            Quel roi a fait construire le château de Chambord ?
-          </p>
-
-          <div class="phone__answers">
-            <div class="phone__answer phone__answer--correct">François Ier</div>
-            <div class="phone__answer">Louis XIV</div>
-            <div class="phone__answer phone__answer--wrong">Henri IV</div>
-            <div class="phone__answer">Charles VIII</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section__inner" style="gap: 40px">
-      <h2 style="max-width: 640px">Une partie dure à peine plus d'une minute.</h2>
-
-      <div class="steps">
-        {STEPS.map((step, index) => (
-          <article class="step">
-            <span class="step__num">0{index + 1}</span>
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--warm">
-    <div class="section__inner section__inner--gap-lg">
-      <div class="ranks-head">
-        <h2>Ton cadre dit ton niveau.</h2>
-        <p>
-          Chaque duel classé fait bouger ton Elo. De Fer à Diamant, ton avatar
-          change de cadre et tes adversaires le voient avant la première question.
-        </p>
-      </div>
-
-      <div class="ranks">
-        {RANKS.map((rank) => (
-          <div class="rank">
-            <EloAvatar
-              tier={rank.tier}
-              seed={rank.seed}
-              bg={rank.bg}
-              size={84}
-              surface="var(--jo-warm)"
-            />
-            <div style={`--rank-label: ${rank.labelColor}`}>
-              <span class="rank__name">{rank.name}</span>
-              <span class="rank__elo">{rank.elo}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div class="rank-stats">
-        <span><i class="ph ph-medal"></i>88 badges à débloquer</span>
-        <span><i class="ph ph-flag-banner"></i>Un titre par sujet maîtrisé</span>
-        <span><i class="ph ph-trophy"></i>Un classement par sujet</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section__inner">
-      <h2>17 univers</h2>
-      <div class="categories">
-        {CATEGORIES.map((category) => (
-          <span class="category" style={`--cat-color: ${category.color}`}>
-            <span class="category__icon">
-              <i class={`ph-fill ${category.icon}`}></i>
-            </span>
-            {category.label}
-          </span>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section__inner">
-      <h2>Quatre façons de jouer</h2>
-      <div class="modes">
-        {MODES.map((mode) => (
-          <article class="mode">
-            <i class={`ph ${mode.icon}`}></i>
-            <h3>{mode.title}</h3>
-            <p>{mode.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="premium">
-    <div class="section__inner">
-      <div class="section__head">
-        <h2>Gratuit. Premium bientôt.</h2>
-        <p>
-          Tous les modes et tous les sujets sont gratuits. Premium arrivera plus
-          tard : il retirera la publicité et élargira tes limites, sans aucun
-          avantage en duel.
-        </p>
-      </div>
-
-      <div class="plans">
-        <div class="plan-card">
-          <div>
-            <div class="plan-card__title">Gratuit</div>
-            <div class="plan-card__price"><b>0 €</b></div>
-          </div>
-          <ul class="plan-list">
-            <li class="is-check"><i class="ph ph-check"></i>Tous les sujets, tous les modes</li>
-            <li class="is-check"><i class="ph ph-check"></i>Elo, badges, titres et classements</li>
-            <li class="is-check"><i class="ph ph-check"></i>Défis et salons ouverts</li>
-            <li class="is-minus"><i class="ph ph-minus"></i>Publicité entre les parties, plus tard</li>
-          </ul>
-        </div>
-
-        <div class="plan-card plan-card--premium">
-          <div class="plan-card__head">
-            <div>
-              <div class="plan-card__title">Premium</div>
-              <div class="plan-card__price"><b>—</b></div>
-            </div>
-            <span class="plan-badge">Bientôt</span>
-          </div>
-          <ul class="plan-list">
-            <li class="is-check"><i class="ph ph-check"></i>Aucune publicité</li>
-            <li class="is-check"><i class="ph ph-check"></i>Plus de défis et de salons ouverts</li>
-            <li class="is-check"><i class="ph ph-check"></i>Statistiques par sujet et revue de toutes tes parties</li>
-            <li class="is-check"><i class="ph ph-check"></i>Aucun avantage en duel</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--warm">
-    <div class="section__inner">
-      <div class="faq-layout">
-        <div class="faq-intro">
-          <h2>Questions fréquentes</h2>
-          <a href="/faq/">Toutes les questions</a>
-        </div>
-
-        <div class="faq-list">
-          {homeFaq.map((item, index) => (
-            <details class="faq-item" open={index === 0}>
-              <summary>
-                {item.q}
-                <i class:list={["ph", index === 0 ? "ph-minus" : "ph-plus"]}></i>
-              </summary>
-              <p>{item.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta">
-    <div class="cta__inner">
-      <svg class="cta__logo" width="72" height="72" viewBox="0 0 100 100" aria-hidden="true">
-        <rect width="100" height="100" rx="28" fill="#181818"></rect>
-        <path
-          d="M60 44V66A18 18 0 0 1 42 84H36"
-          fill="none"
-          stroke="#FFFFFF"
-          stroke-width="10"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-        <circle cx="60" cy="24" r="7" fill="#E8B04A"></circle>
-      </svg>
-
-      <h2>Ton premier duel démarre en moins de vingt secondes.</h2>
-
-      <div class="cta__actions">
-        <button class="btn btn--primary btn--lg" type="button" data-open-waitlist>
-          Télécharger Joutio
-        </button>
-        <a class="btn btn--secondary btn--lg" href={SITE.appUrl}>Jouer sur le web</a>
-      </div>
-    </div>
-  </section>
+<BaseLayout jsonLd={jsonLd} current="/">
+  <SiteHero>
+    <StoreButtons />
+    <p class="jo-type-callout text-jo-muted">ou <SiteLink href={SITE.appUrl}>jouer sur app.joutio.com</SiteLink></p>
+  </SiteHero>
+  <SiteSection title="Une partie dure à peine plus d’une minute.">
+    <StepList steps={STEPS} />
+  </SiteSection>
+  <SiteSection
+    tone="warm"
+    title="Ton cadre dit ton niveau."
+    lede="Chaque duel classé fait bouger ton Elo. De Fer à Diamant, ton avatar change de cadre et tes adversaires le voient avant la première question."
+  >
+    <RankStrip />
+    <FactRow facts={RANK_FACTS} />
+  </SiteSection>
+  <SiteSection title="17 univers">
+    <CategoryCloud />
+  </SiteSection>
+  <SiteSection title="Quatre façons de jouer">
+    <FeatureGrid features={MODES} />
+  </SiteSection>
+  <SiteSection
+    id="premium"
+    title="Gratuit. Premium bientôt."
+    lede="Tous les modes et tous les sujets sont gratuits. Premium arrivera plus tard : il retirera la publicité et élargira tes limites, sans aucun avantage en duel."
+  >
+    <PlanCompare />
+  </SiteSection>
+  <SiteSection tone="warm" title="Questions fréquentes">
+    <LinkButton slot="action" href="/faq/" variant="plain" size="M" class="justify-self-start">Toutes les questions</LinkButton>
+    <FaqList items={FAQ_HOME} />
+  </SiteSection>
+  <CtaBand id="telecharger" title="Ton premier duel démarre en moins de vingt secondes.">
+    <StoreButtons class="justify-center" />
+    <p class="jo-type-callout text-jo-muted">ou <SiteLink href={SITE.appUrl}>jouer sur app.joutio.com</SiteLink></p>
+  </CtaBand>
 </BaseLayout>

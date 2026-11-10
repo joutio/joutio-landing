@@ -1,0 +1,33 @@
+---
+/**
+ * Boutons de téléchargement (`StoreButtons` du lab) : deux actions équivalentes, donc `filled` + `neutral`
+ * (`button.md`), pas deux `filled` accent dans la même zone.
+ */
+import { buttonStyles } from "../lib/button";
+import { STORE_LINKS } from "../data/site";
+import Icon from "./Icon.astro";
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+const store = `${buttonStyles({ variant: "filled", tone: "neutral" })} min-h-14 cursor-pointer gap-3 px-5 no-underline active:scale-[.98]`;
+import { cn } from "../lib/cn";
+---
+
+<div class={cn("flex flex-wrap gap-3", className)}>
+  <a href={STORE_LINKS.appStore} class={store}>
+    <Icon name="apple-logo" weight="fill" size={26} />
+    <span class="grid text-left">
+      <span class="jo-type-caption opacity-75">Télécharger dans</span>
+      <span class="jo-type-headline font-semibold">l'App Store</span>
+    </span>
+  </a>
+  <a href={STORE_LINKS.googlePlay} class={store}>
+    <Icon name="google-play-logo" weight="fill" size={24} />
+    <span class="grid text-left">
+      <span class="jo-type-caption opacity-75">Disponible sur</span>
+      <span class="jo-type-headline font-semibold">Google Play</span>
+    </span>
+  </a>
+</div>

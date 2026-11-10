@@ -1,0 +1,38 @@
+---
+/** Gratuit / Premium (`PlanCompare` du lab) : la mise en avant porte un filet accent. */
+import { PLANS } from "../data/site";
+import Icon from "./Icon.astro";
+import { cn } from "../lib/cn";
+---
+
+<div class="grid gap-4 @3xl:grid-cols-2">
+  {
+    PLANS.map((plan) => (
+      <article class={cn("grid content-start gap-6 rounded-jo-lg border bg-jo-surface p-6 @3xl:p-8", plan.highlight ? "border-jo-accent" : "border-jo-border")}>
+        <header class="flex items-start justify-between gap-4">
+          <div class="grid gap-1">
+            <h3 class="jo-type-title-2">{plan.name}</h3>
+            <p class="jo-type-title-1 font-mono">{plan.price}</p>
+          </div>
+          {plan.badge && (
+            <span class="jo-type-caption inline-flex h-6 items-center gap-1 rounded-jo-xs bg-jo-accent px-2 font-semibold whitespace-nowrap text-jo-on-accent">
+              {plan.badge}
+            </span>
+          )}
+        </header>
+        <ul class="grid gap-3">
+          {plan.items.map((item) => (
+            <li class={cn("jo-type-callout flex items-start gap-3", !item.included && "text-jo-muted")}>
+              {item.included ? (
+                <Icon name="check" class="mt-px flex-none text-jo-correct" label="Inclus" />
+              ) : (
+                <Icon name="minus" class="mt-px flex-none text-jo-muted" label="Non inclus" />
+              )}
+              {item.text}
+            </li>
+          ))}
+        </ul>
+      </article>
+    ))
+  }
+</div>

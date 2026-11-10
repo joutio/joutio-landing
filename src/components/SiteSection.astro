@@ -1,0 +1,31 @@
+---
+/** Section de page (`SiteSection` du lab) : titre `title1`, chapeau, action, fond `bg` ou `warm`. */
+import SiteInner from "./SiteInner.astro";
+
+interface Props {
+  id?: string;
+  tone?: "default" | "warm";
+  title?: string;
+  lede?: string;
+}
+const { id, tone = "default", title, lede } = Astro.props;
+const hasAction = Astro.slots.has("action");
+import { cn } from "../lib/cn";
+---
+
+<section id={id} class={cn("scroll-mt-16 py-14 @5xl:py-24", tone === "warm" && "bg-jo-warm")}>
+  <SiteInner class="grid gap-8 @5xl:gap-10">
+    {
+      (title || lede || hasAction) && (
+        <header class="grid gap-4 @3xl:grid-cols-[1fr_auto] @3xl:items-end">
+          <div class="grid max-w-[680px] gap-3">
+            {title && <h2 class="jo-type-title-1 text-balance">{title}</h2>}
+            {lede && <p class="jo-type-body text-pretty text-jo-muted">{lede}</p>}
+          </div>
+          <slot name="action" />
+        </header>
+      )
+    }
+    <slot />
+  </SiteInner>
+</section>

@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHero from "../components/PageHero.astro";
-import LegalNotice from "../components/LegalNotice.astro";
+import LegalLayout from "../components/LegalLayout.astro";
 import { LEGAL } from "../data/legal";
 ---
 
@@ -10,15 +9,7 @@ import { LEGAL } from "../data/legal";
   description="Éditeur, directeur de publication, hébergeur et propriété intellectuelle du site Joutio."
   noindex={!LEGAL.ready}
 >
-  <PageHero
-    eyebrow="Juridique"
-    title="Mentions légales"
-    description={`Dernière mise à jour : ${LEGAL.updatedAt}.`}
-  />
-
-  <div class="container">
-    <div class="prose">
-      <LegalNotice page="mentions légales" />
+  <LegalLayout title="Mentions légales" notice="mentions légales">
 
       <h2>Éditeur du site</h2>
       <p>
@@ -57,6 +48,5 @@ import { LEGAL } from "../data/legal";
         Pour exercer tes droits, écris à{" "}
         <a href={`mailto:${LEGAL.dpoEmail}`}>{LEGAL.dpoEmail}</a>.
       </p>
-    </div>
-  </div>
+  </LegalLayout>
 </BaseLayout>

@@ -1,0 +1,51 @@
+---
+/**
+ * Hero (`SiteHero` + `PhonePair` du lab) : promesse à gauche, deux téléphones à droite, empilés sous 1 024 px.
+ * Les téléphones sont des captures figées des écrans du lab (`npm run captures`), servies en WebP.
+ */
+import { Image } from "astro:assets";
+import { HERO } from "../data/site";
+import duel from "../assets/captures/hero-duel-dark.png";
+import resultDark from "../assets/captures/hero-result-dark.png";
+import resultLight from "../assets/captures/hero-result-light.png";
+import SiteInner from "./SiteInner.astro";
+
+/** Châssis iPhone 18 du lab, en px CSS : 402 + 2 × 5 de large, 874 + 2 × 5 de haut. */
+const PHONE = { width: 412, height: 884 };
+const groups = [...HERO.title, HERO.accent];
+const phone = (scale: number) => ({ width: Math.round(PHONE.width * scale), height: Math.round(PHONE.height * scale) });
+const front = phone(0.62);
+const back = phone(0.56);
+import { cn } from "../lib/cn";
+---
+
+<section class="overflow-hidden pt-10 pb-14 @5xl:pt-20 @5xl:pb-24">
+  <SiteInner class="grid items-center gap-12 @5xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] @5xl:gap-8">
+    <div class="grid max-w-[680px] gap-6">
+      <p class="jo-type-caption font-semibold text-jo-accent-ink">{HERO.eyebrow}</p>
+      <h1 class="jo-type-display">
+        {
+          groups.map((group, index) => (
+            <Fragment>
+              {index > 0 && " "}
+              <span class={cn("whitespace-nowrap", group === HERO.accent && "text-jo-muted")}>{group}</span>
+            </Fragment>
+          ))
+        }
+      </h1>
+      <p class="jo-type-body max-w-[520px] text-pretty text-jo-muted">{HERO.lede}</p>
+      <div class="grid gap-4"><slot /></div>
+    </div>
+    <div aria-hidden="true" class="flex justify-center @5xl:justify-end">
+      <div class="relative flex items-start">
+        <div class="relative z-10 mt-16 w-[206px] @3xl:w-[247px] @5xl:w-[255px]">
+          <Image src={duel} alt="" widths={[256, 512]} sizes="255px" loading="eager" class="h-auto w-full" {...front} />
+        </div>
+        <div class="-ml-10 w-[181px] @3xl:-ml-1 @3xl:w-[222px] @5xl:w-[231px]">
+          <Image src={resultDark} alt="" widths={[232, 464]} sizes="231px" loading="eager" class="jo-only-dark h-auto w-full" {...back} />
+          <Image src={resultLight} alt="" widths={[232, 464]} sizes="231px" loading="eager" class="jo-only-light h-auto w-full" {...back} />
+        </div>
+      </div>
+    </div>
+  </SiteInner>
+</section>

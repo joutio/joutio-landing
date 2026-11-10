@@ -1,0 +1,58 @@
+---
+/**
+ * Champ (`Field` du lab) : libellé, zone de saisie, erreur en ligne. `src/scripts/forms.ts` pose `aria-invalid` et
+ * le message ; le filet passe alors en `wrong`.
+ */
+import Icon from "./Icon.astro";
+
+interface Props {
+  name: string;
+  label: string;
+  type?: "text" | "email";
+  placeholder?: string;
+  autocomplete?: string;
+  inputmode?: "email" | "text";
+  required?: boolean;
+  multiline?: boolean;
+  /** Message affiché quand le champ est invalide. */
+  error: string;
+  class?: string;
+}
+const { name, label, type = "text", placeholder, autocomplete, inputmode, required, multiline, error, class: className } = Astro.props;
+const id = `field-${name}-${Math.random().toString(36).slice(2, 7)}`;
+const input = "jo-type-body min-w-0 flex-1 resize-none bg-transparent text-jo-text outline-none placeholder:text-jo-muted";
+import { cn } from "../lib/cn";
+---
+
+<div class={cn("grid w-full content-start gap-2", className)} data-field>
+  <label for={id} class="jo-type-callout">{label}</label>
+  <div
+    class={cn(
+      "jo-transition flex gap-2 rounded-jo-sm bg-jo-raised py-3 pr-2 pl-3.5 ring-1 ring-jo-border ring-inset focus-within:ring-2 focus-within:ring-jo-accent has-[[aria-invalid=true]]:ring-2 has-[[aria-invalid=true]]:ring-jo-wrong",
+      multiline ? "min-h-24 items-start" : "min-h-12 items-center",
+    )}
+  >
+    {
+      multiline ? (
+        <textarea id={id} name={name} rows="3" placeholder={placeholder} required={required} aria-describedby={`${id}-error`} data-error={error} class={input} />
+      ) : (
+        <input
+          id={id}
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          autocomplete={autocomplete}
+          inputmode={inputmode}
+          required={required}
+          aria-describedby={`${id}-error`}
+          data-error={error}
+          class={input}
+        />
+      )
+    }
+  </div>
+  <span id={`${id}-error`} role="alert" class="jo-type-caption flex items-center gap-1 text-jo-wrong" hidden data-field-error>
+    <Icon name="warning-circle" weight="fill" size={16} />
+    <span data-field-message></span>
+  </span>
+</div>

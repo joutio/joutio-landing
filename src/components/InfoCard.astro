@@ -1,0 +1,12 @@
+---
+/** Carte d'information latérale (`InfoCard` du lab). */
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<section class="grid content-start gap-4 rounded-jo-lg border border-jo-border bg-jo-surface p-6">
+  <h2 class="jo-type-headline">{title}</h2>
+  <slot />
+</section>

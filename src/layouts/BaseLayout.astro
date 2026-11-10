@@ -1,8 +1,11 @@
 ---
+/**
+ * Gabarit des pages (`SiteFrame` + `SitePage` du lab) : en-tête, contenu, pied de page, dans la racine
+ * `.jo-site @container` dont les requêtes de conteneur règlent les points de rupture.
+ */
 import "../styles/global.css";
-import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import WaitlistDialog from "../components/WaitlistDialog.astro";
+import SiteHeader from "../components/SiteHeader.astro";
 import { SITE } from "../data/site";
 
 export interface Props {
@@ -11,17 +14,12 @@ export interface Props {
   image?: string;
   canonical?: string;
   noindex?: boolean;
+  /** `href` de la page courante dans la navigation. */
+  current?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const {
-  title,
-  description = SITE.description,
-  image = "/og.png",
-  canonical,
-  noindex = false,
-  jsonLd,
-} = Astro.props;
+const { title, description = SITE.description, image = "/og.png", canonical, noindex = false, current, jsonLd } = Astro.props;
 
 const pageTitle = title ? `${title} — Joutio` : SITE.title;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString();
@@ -38,21 +36,18 @@ const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
-    <meta name="theme-color" content="#F6F5F1" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#000000" />
     <meta name="generator" content={Astro.generator} />
+    {/* Thème choisi relu avant le premier rendu : pas de flash. Sombre par défaut. */}
+    <script is:inline>
+      try {
+        if (localStorage.getItem("joutio-site-theme") === "light") document.documentElement.dataset.theme = "light";
+      } catch {}
+    </script>
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/logo-mark.svg" />
-    <link rel="stylesheet" href="/icons/phosphor.css" />
-    <link rel="stylesheet" href="/icons/phosphor-fill.css" />
-    <link
-      rel="preload"
-      href="/fonts/geist-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Joutio" />
@@ -67,19 +62,24 @@ const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
 
-    {jsonLdBlocks.map((block) => (
-      <script type="application/ld+json" set:html={JSON.stringify(block)} />
-    ))}
+    {jsonLdBlocks.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}
   </head>
   <body>
-    <a class="skip-link" href="#contenu">Aller au contenu</a>
-    <SiteHeader />
-    <main id="contenu">
-      <slot />
-    </main>
-    <SiteFooter />
-    <WaitlistDialog />
+    <div class="jo-site @container min-h-full bg-jo-bg text-jo-text">
+      <a
+        href="#contenu"
+        class="jo-focus sr-only z-50 rounded-jo-sm bg-jo-text px-4 py-2 font-semibold text-jo-bg focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+      >
+        Aller au contenu
+      </a>
+      <SiteHeader current={current} />
+      <main id="contenu">
+        <slot />
+      </main>
+      <SiteFooter />
+    </div>
     <script>
+      import "../scripts/site";
       import "../scripts/forms";
     </script>
   </body>

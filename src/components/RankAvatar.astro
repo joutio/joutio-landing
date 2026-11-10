@@ -1,0 +1,48 @@
+---
+/**
+ * Avatar encadré au rang (`Avatar` + `RankFrame` du lab), en calques SVG de `public/brand/frame/`. Le Fer est
+ * un anneau plein ; les rangs hauts tournent (`jo-frame-spin`), le Diamant respire (`jo-frame-pulse`).
+ */
+import type { Tier } from "../data/site";
+
+interface Props {
+  tier: Tier;
+  name: string;
+  src: string;
+  /** Largeur de l'avatar en px, hors halo. */
+  size?: number;
+}
+const { tier, name, src, size = 72 } = Astro.props;
+
+// Valeurs du lab (`rank-frame.tsx`).
+const FRAMES: Record<Tier, { inset: number; spin?: number; counter?: number; pulse?: boolean }> = {
+  FER: { inset: 0.05 },
+  BRONZE: { inset: 0.075 },
+  ARGENT: { inset: 0.08 },
+  OR: { inset: 0.085 },
+  PLATINE: { inset: 0.09, spin: 5000 },
+  EMERAUDE: { inset: 0.095, spin: 4500 },
+  DIAMANT: { inset: 0.1, spin: 7000, counter: 3500, pulse: true },
+};
+const { inset, spin, counter, pulse } = FRAMES[tier];
+const base = `/brand/frame/frame-${tier.toLowerCase()}`;
+const layer = "pointer-events-none absolute max-w-none";
+const layerStyle = (duration?: number) => `inset:-22%;width:144%;height:144%;${duration ? `--jo-frame-duration:${duration}ms` : ""}`;
+import { cn } from "../lib/cn";
+---
+
+<span class="relative inline-block flex-none" style={`width:${size}px;height:${size}px`}>
+  {tier === "FER" ? (
+    <span class="absolute inset-0 rounded-jo-full" style="background-color: var(--jo-tier-fer)" />
+  ) : (
+    <Fragment>
+      {pulse && <img src={`${base}-halo.svg`} alt="" aria-hidden="true" class={cn(layer, "jo-frame-pulse")} style={layerStyle()} />}
+      <img src={`${base}.svg`} alt="" aria-hidden="true" class={layer} style={layerStyle()} />
+      {spin && <img src={`${base}-spin.svg`} alt="" aria-hidden="true" class={cn(layer, "jo-frame-spin")} style={layerStyle(spin)} />}
+      {counter && <img src={`${base}-counter.svg`} alt="" aria-hidden="true" class={cn(layer, "jo-frame-counter")} style={layerStyle(counter)} />}
+    </Fragment>
+  )}
+  <span class="absolute overflow-hidden rounded-jo-full" style={`inset:${inset * 100}%`}>
+    <img src={src} alt={name} class="size-full rounded-jo-full object-cover" loading="lazy" />
+  </span>
+</span>

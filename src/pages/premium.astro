@@ -1,73 +1,33 @@
 ---
+/** Premium (`/site/premium` du lab) : liste d'attente Premium, comparaison des offres, question. */
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqList from "../components/FaqList.astro";
+import PageHero from "../components/PageHero.astro";
+import PlanCompare from "../components/PlanCompare.astro";
+import SiteSection from "../components/SiteSection.astro";
+import WaitlistForm from "../components/WaitlistForm.astro";
+import { FAQ_HOME, PREMIUM } from "../data/site";
 ---
 
 <BaseLayout
   title="Premium"
   description="Premium arrive bientôt : il retirera la publicité et élargira les limites de défis et de salons, sans aucun avantage en duel."
+  current="/premium/"
 >
-  <div class="premium-page">
-    <span class="premium-page__eyebrow">Premium</span>
-    <h1>Joue sans pub, défie qui tu veux.</h1>
-    <p>
-      Premium arrive bientôt. Il retirera la publicité et élargira les limites
-      de défis et de salons. Il ne change rien aux duels : même chrono, mêmes
-      questions, même Elo.
-    </p>
-    <button class="premium-page__cta" type="button" data-open-waitlist>
-      Rejoindre la liste
-    </button>
-  </div>
+  <PageHero eyebrow={PREMIUM.eyebrow} title={PREMIUM.title} lede={PREMIUM.lede}>
+    <div class="pt-4">
+      <WaitlistForm
+        kind="premium"
+        action="Me prévenir"
+        note="Un seul e-mail, à la sortie de Premium. Pas de spam, désinscription en un clic."
+        success="C’est noté. On t’écrit une seule fois, à la sortie de Premium."
+      />
+    </div>
+  </PageHero>
+  <SiteSection title="Ce qui change, ce qui ne change pas">
+    <PlanCompare />
+  </SiteSection>
+  <SiteSection tone="warm" title="Questions fréquentes">
+    <FaqList items={[FAQ_HOME[1]!]} />
+  </SiteSection>
 </BaseLayout>
-
-<style>
-  .premium-page {
-    max-width: 880px;
-    margin: 0 auto;
-    padding: clamp(48px, 7vw, 96px) 24px;
-    display: grid;
-    gap: 28px;
-  }
-
-  .premium-page__eyebrow {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--jo-accent-ink);
-  }
-
-  .premium-page h1 {
-    margin: 0;
-    font-size: clamp(36px, 5vw, 56px);
-    line-height: 1.02;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    text-wrap: balance;
-  }
-
-  .premium-page p {
-    margin: 0;
-    max-width: 600px;
-    font-size: 18px;
-    line-height: 28px;
-    color: var(--jo-muted);
-  }
-
-  .premium-page__cta {
-    justify-self: start;
-    height: 50px;
-    padding: 0 22px;
-    border: 0;
-    border-radius: 10px;
-    background: var(--jo-accent);
-    color: var(--jo-on-accent);
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  @media (max-width: 760px) {
-    .premium-page {
-      padding: 48px 24px;
-    }
-  }
-</style>

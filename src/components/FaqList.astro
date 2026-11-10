@@ -1,34 +1,25 @@
 ---
-import { FAQ } from "../data/site";
+/** Questions en `<details>` natifs (`FaqList` du lab) : ouvrables sans JavaScript. */
+import type { FaqItem } from "../data/site";
+import Icon from "./Icon.astro";
 
-export interface Props {
-  groups: typeof FAQ;
+interface Props {
+  items: readonly FaqItem[];
   openFirst?: boolean;
 }
-
-const { groups, openFirst = true } = Astro.props;
-let index = 0;
+const { items, openFirst = true } = Astro.props;
 ---
 
-<div class="faq-groups">
-  {groups.map((group) => (
-    <section class="faq-group">
-      <h2 class="faq-group__title">{group.group}</h2>
-      <div class="faq-list">
-        {group.items.map((item) => {
-          const open = openFirst && index === 0;
-          index += 1;
-          return (
-            <details class="faq-item" open={open}>
-              <summary>
-                {item.q}
-                <i class:list={["ph", open ? "ph-minus" : "ph-plus"]}></i>
-              </summary>
-              <p>{item.a}</p>
-            </details>
-          );
-        })}
-      </div>
-    </section>
-  ))}
+<div class="grid border-t border-jo-border">
+  {
+    items.map((item, index) => (
+      <details open={openFirst && index === 0} class="group border-b border-jo-border">
+        <summary class="jo-type-headline jo-focus-inset flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
+          {item.q}
+          <Icon name="plus" class="jo-transition flex-none text-jo-muted group-open:rotate-45" />
+        </summary>
+        <p class="jo-type-body max-w-[680px] pb-5 text-pretty text-jo-muted">{item.a}</p>
+      </details>
+    ))
+  }
 </div>

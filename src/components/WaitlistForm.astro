@@ -1,39 +1,58 @@
 ---
+/**
+ * Inscription par e-mail (`WaitlistForm` du lab). Sans JavaScript, le formulaire part vers l'endpoint ou par
+ * `mailto` ; avec, `src/scripts/forms.ts` valide, envoie et remplace le formulaire par la confirmation.
+ */
 import { SITE } from "../data/site";
+import { buttonStyles } from "../lib/button";
+import Field from "./Field.astro";
+import FormStatus from "./FormStatus.astro";
+import Icon from "./Icon.astro";
 
-export interface Props {
-  id?: string;
-  compact?: boolean;
+interface Props {
+  action: string;
+  note: string;
+  success: string;
+  kind: string;
 }
-
-const { id = "waitlist" } = Astro.props;
+const { action, note, success, kind } = Astro.props;
 const endpoint = import.meta.env.PUBLIC_WAITLIST_ENDPOINT ?? "";
+import { cn } from "../lib/cn";
 ---
 
-<form
-  id={id}
-  class="waitlist-form"
-  data-form
-  data-endpoint={endpoint}
-  data-fallback-email={SITE.email}
-  data-form-kind="waitlist"
-  novalidate
->
-  <label for={`${id}-email`}>Ton e-mail</label>
-  <div class="waitlist-form__row">
-    <input
-      id={`${id}-email`}
-      name="email"
-      type="email"
-      inputmode="email"
-      autocomplete="email"
-      placeholder="toi@exemple.fr"
-      required
-    />
-    <button class="btn btn--primary" type="submit">Me prévenir</button>
-  </div>
-  <p class="waitlist-form__note">
-    Un seul e-mail au lancement. Pas de spam, désinscription en un clic.
+<div class="grid w-full max-w-[520px] gap-3" data-form-root>
+  <form
+    novalidate
+    class="grid gap-3"
+    action={endpoint || `mailto:${SITE.email}?subject=${encodeURIComponent("Liste d'attente Joutio")}`}
+    method="post"
+    enctype={endpoint ? undefined : "text/plain"}
+    data-form
+    data-endpoint={endpoint}
+    data-fallback-email={SITE.email}
+    data-form-kind={kind}
+  >
+    <div class="grid gap-3 @xl:grid-cols-[1fr_auto] @xl:items-start">
+      <Field
+        name="email"
+        label="Ton e-mail"
+        type="email"
+        inputmode="email"
+        autocomplete="email"
+        placeholder="toi@exemple.fr"
+        required
+        error="Cette adresse e-mail est incomplète. Vérifie-la, par exemple manon@mail.fr."
+      />
+      <button type="submit" class={cn(buttonStyles({ size: "L" }), "@xl:mt-7")}>
+        <Icon name="circle-notch" class="jo-spin" data-loading hidden />
+        {action}
+      </button>
+    </div>
+    <p class="jo-type-caption text-jo-muted">{note}</p>
+    <FormStatus fallbackEmail={SITE.email} failure="L'envoi a échoué. Réessaie dans un instant, ou écris à" />
+  </form>
+  <p role="status" class="jo-type-callout flex items-start gap-2 text-jo-text" hidden data-form-success>
+    <Icon name="check-circle" weight="fill" class="mt-px flex-none text-jo-correct" />
+    <span>{success}</span>
   </p>
-  <p class="waitlist-form__status" data-form-status role="status" aria-live="polite"></p>
-</form>
+</div>

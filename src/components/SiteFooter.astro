@@ -1,36 +1,30 @@
 ---
-import { FOOTER_LINKS } from "../data/site";
-import { LEGAL } from "../data/legal";
+/** Pied de page (`SiteFooter` du lab) : marque, colonnes de liens (dont le juridique), mention. */
+import { FOOTER_LINKS, FOOTER_NOTE } from "../data/site";
 import Logo from "./Logo.astro";
-
-const year = new Date().getFullYear();
+import SiteInner from "./SiteInner.astro";
 ---
 
-<footer class="site-footer">
-  <div class="site-footer__inner">
-    <div class="site-footer__grid">
-      <div class="site-footer__brand">
-        <Logo size={28} />
-        <p>Le quiz qui se joue à deux.</p>
-      </div>
-
-      {FOOTER_LINKS.map((column, index) => (
-        <div class:list={["site-footer__col", index === 2 && "site-footer__col--wide"]}>
-          <b>{column.title}</b>
-          {column.links.map((link) =>
-            link.href === "/#waitlist" ? (
-              <a href={link.href} data-open-waitlist>{link.label}</a>
-            ) : (
-              <a href={link.href}>{link.label}</a>
-            ),
-          )}
-        </div>
-      ))}
+<footer class="border-t border-jo-border bg-jo-canvas">
+  <SiteInner class="grid gap-10 py-14 @3xl:grid-cols-[1fr_2fr]">
+    <div class="grid content-start gap-3">
+      <Logo variant="lockup" size={28} />
+      <p class="jo-type-callout max-w-[280px] text-jo-muted">Le quiz qui se joue à deux.</p>
     </div>
-
-    <div class="site-footer__bottom">
-      <span>© {year} {LEGAL.entity}</span>
-      <a href="/cookies/">Gérer les cookies</a>
+    <div class="grid grid-cols-2 gap-8 @xl:grid-cols-3">
+      {
+        FOOTER_LINKS.map((column) => (
+          <nav aria-label={column.title} class="grid content-start gap-2">
+            <h2 class="jo-type-caption font-semibold text-jo-muted">{column.title}</h2>
+            {column.links.map((link) => (
+              <a href={link.href} class="jo-type-callout jo-focus w-fit rounded-jo-xs text-jo-text hover:underline">
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        ))
+      }
     </div>
-  </div>
+    <p class="jo-type-caption text-jo-muted @3xl:col-span-2">{FOOTER_NOTE}</p>
+  </SiteInner>
 </footer>

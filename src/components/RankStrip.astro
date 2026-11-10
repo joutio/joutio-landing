@@ -1,0 +1,22 @@
+---
+/** Les sept rangs (`RankStrip` du lab) : avatar encadré, nom du rang, seuil d'Elo ; défile en compact. */
+import { RANKS } from "../data/site";
+import RankAvatar from "./RankAvatar.astro";
+
+const elo = (min: number) => (min === 0 ? "Départ" : `${min.toLocaleString("fr-FR")} Elo`);
+const ink = (tier: string) => `color: color-mix(in oklab, var(--jo-tier-${tier.toLowerCase()}) 60%, var(--jo-text))`;
+---
+
+<ul class="jo-no-scrollbar -mx-5 flex gap-6 overflow-x-auto px-5 pb-2 @3xl:mx-0 @3xl:grid @3xl:grid-cols-7 @3xl:overflow-visible @3xl:px-0">
+  {
+    RANKS.map((rank) => (
+      <li class="grid flex-none justify-items-center gap-3 text-center">
+        <RankAvatar tier={rank.tier} name={rank.name} src={`/site/avatars/${rank.tier.toLowerCase()}.svg`} />
+        <span class="grid gap-0.5">
+          <span class="jo-type-headline" style={ink(rank.tier)}>{rank.label}</span>
+          <span class="jo-type-caption font-mono text-jo-muted">{elo(rank.minElo)}</span>
+        </span>
+      </li>
+    ))
+  }
+</ul>

@@ -1,40 +1,81 @@
 ---
-import { NAV } from "../data/site";
+/**
+ * En-tête collant (`SiteHeader` du lab) : surface de verre, logo, navigation, thème et action principale. Sous
+ * 1 024 px, la navigation passe dans un panneau pleine hauteur ; `src/scripts/site.ts` le bascule.
+ */
+import { CTA, NAV } from "../data/site";
+import { iconButtonClass, linkButtonClass } from "../lib/button";
+import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
+import SiteInner from "./SiteInner.astro";
 
-const path = Astro.url.pathname;
-
-function isCurrent(href: string) {
-  const target = href.split("#")[0] || "/";
-  if (target === "/") return path === "/";
-  return path === target || path === target.replace(/\/$/, "");
+interface Props {
+  /** `href` de la page courante, marquée `aria-current`. */
+  current?: string;
 }
+const { current } = Astro.props;
+import { cn } from "../lib/cn";
 ---
 
-<header
-  class="site-header"
-  style="backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);"
->
-  <div class="site-header__inner">
-    <a href="/" aria-label="Joutio, accueil">
-      <Logo size={32} />
-    </a>
-
-    <nav class="site-nav" aria-label="Navigation principale">
-      {NAV.map((item) => (
-        <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
-          {item.label}
-        </a>
-      ))}
-    </nav>
-
-    <div class="header-actions">
-      <a class="btn btn--ghost btn--sm" href="https://app.joutio.com">
-        Jouer sur le web
+<header class="sticky top-0 z-30" data-site-header>
+  <div class="border-b border-jo-border bg-jo-glass backdrop-blur-xl">
+    <SiteInner class="flex h-16 items-center gap-4">
+      <a href="/" class="jo-focus rounded-jo-sm" aria-label="Joutio, accueil">
+        <Logo variant="lockup" size={28} />
       </a>
-      <button class="btn btn--primary btn--sm" type="button" data-open-waitlist>
-        Télécharger
-      </button>
-    </div>
+      <nav aria-label="Navigation principale" class="ml-4 hidden flex-1 items-center gap-1 @5xl:flex">
+        {
+          NAV.map((item) => (
+            <a
+              href={item.href}
+              aria-current={item.href === current ? "page" : undefined}
+              class="jo-type-callout jo-transition jo-focus rounded-jo-sm px-3 py-2 text-jo-muted hover:bg-jo-hover hover:text-jo-text aria-[current=page]:font-semibold aria-[current=page]:text-jo-text"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="ml-auto flex items-center gap-2">
+        <button type="button" class={iconButtonClass} data-theme-toggle aria-label="Changer de thème">
+          <span class="jo-only-dark"><Icon name="sun" /></span>
+          <span class="jo-only-light"><Icon name="moon" /></span>
+        </button>
+        <a href={CTA.href} class={cn(linkButtonClass({ size: "S" }), "hidden @3xl:inline-flex")}>{CTA.label}</a>
+        <button
+          type="button"
+          class={cn(iconButtonClass, "@5xl:hidden")}
+          aria-label="Ouvrir le menu"
+          aria-expanded="false"
+          aria-controls="jo-site-menu"
+          data-menu-toggle
+        >
+          <span data-menu-icon="closed"><Icon name="list" /></span>
+          <span data-menu-icon="open" hidden><Icon name="x" /></span>
+        </button>
+      </div>
+    </SiteInner>
   </div>
+  <nav
+    id="jo-site-menu"
+    aria-label="Menu"
+    hidden
+    class="absolute inset-x-0 top-full h-[calc(var(--jo-site-viewport,100dvh)-4rem)] overflow-y-auto bg-jo-bg/95 backdrop-blur-xl @5xl:hidden"
+  >
+    <SiteInner class="grid gap-1 py-6">
+      {
+        NAV.map((item, index) => (
+          <a
+            href={item.href}
+            aria-current={item.href === current ? "page" : undefined}
+            style={`animation-delay:${Math.min(index * 60, 340)}ms`}
+            class="jo-site-rise jo-type-title-2 jo-focus rounded-jo-sm py-3 text-jo-muted aria-[current=page]:text-jo-text"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a href={CTA.href} class={cn(linkButtonClass({ full: true }), "mt-6")}>{CTA.label}</a>
+    </SiteInner>
+  </nav>
 </header>

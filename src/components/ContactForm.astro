@@ -1,45 +1,65 @@
 ---
-import { SITE } from "../data/site";
+/** Formulaire de contact (`ContactForm` du lab) : nom, e-mail, sujet en puces exclusives, message. */
+import { CONTACT_SUBJECTS, SITE } from "../data/site";
+import { buttonStyles } from "../lib/button";
+import Field from "./Field.astro";
+import FormStatus from "./FormStatus.astro";
+import Icon from "./Icon.astro";
 
 const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? "";
+// Classes de `Chip` du lab ; l'état choisi suit la radio cochée.
+const chip =
+  "jo-type-callout jo-transition relative inline-flex h-8 flex-none cursor-pointer items-center gap-2 rounded-jo-full bg-jo-raised px-3 whitespace-nowrap text-jo-text after:absolute after:inset-x-0 after:-inset-y-1.5 active:opacity-60 has-[:checked]:bg-jo-text has-[:checked]:font-semibold has-[:checked]:text-jo-bg has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-jo-text";
+import { cn } from "../lib/cn";
 ---
 
-<form
-  class="waitlist-form"
-  data-form
-  data-endpoint={endpoint}
-  data-fallback-email={SITE.email}
-  data-form-kind="contact"
-  novalidate
->
-  <label for="contact-email">Ton e-mail</label>
-  <input
-    id="contact-email"
-    name="email"
-    type="email"
-    inputmode="email"
-    autocomplete="email"
-    placeholder="toi@exemple.fr"
-    required
-  />
-
-  <label for="contact-subject">Sujet</label>
-  <select id="contact-subject" name="subject">
-    <option>Support</option>
-    <option>Presse</option>
-    <option>Partenariat</option>
-    <option>Signaler une erreur</option>
-  </select>
-
-  <label for="contact-message">Message</label>
-  <textarea
-    id="contact-message"
-    name="message"
-    rows="5"
-    placeholder="Dis-nous tout."
-    required
-  ></textarea>
-
-  <button class="btn btn--primary" type="submit">Envoyer le message</button>
-  <p class="waitlist-form__status" data-form-status role="status" aria-live="polite"></p>
-</form>
+<div class="grid content-start gap-5" data-form-root>
+  <form
+    novalidate
+    class="grid content-start gap-5"
+    action={endpoint || `mailto:${SITE.email}?subject=${encodeURIComponent("Contact Joutio")}`}
+    method="post"
+    enctype={endpoint ? undefined : "text/plain"}
+    data-form
+    data-endpoint={endpoint}
+    data-fallback-email={SITE.email}
+    data-form-kind="contact"
+  >
+    <div class="grid gap-5 @3xl:grid-cols-2">
+      <Field name="name" label="Nom" autocomplete="name" placeholder="Manon Laurent" error="" />
+      <Field
+        name="email"
+        label="E-mail"
+        type="email"
+        inputmode="email"
+        autocomplete="email"
+        placeholder="manon@mail.fr"
+        required
+        error="Indique une adresse e-mail complète, pour qu’on puisse te répondre."
+      />
+    </div>
+    <fieldset class="grid gap-2">
+      <legend class="jo-type-callout mb-2">Sujet</legend>
+      <div class="flex flex-wrap gap-2">
+        {
+          CONTACT_SUBJECTS.map((subject, index) => (
+            <label class={chip}>
+              <input type="radio" name="subject" value={subject} checked={index === 0} class="sr-only" />
+              {subject}
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+    <Field name="message" label="Message" multiline placeholder="Ton message" required error="Écris ton message avant d’envoyer." />
+    <button type="submit" class={cn(buttonStyles({ size: "L" }), "justify-self-start")}>
+      <Icon name="circle-notch" class="jo-spin" data-loading hidden />
+      Envoyer le message
+    </button>
+    <FormStatus fallbackEmail={SITE.email} failure="L'envoi a échoué. Réessaie, ou écris directement à" />
+  </form>
+  <p role="status" class="jo-type-callout flex items-start gap-2 text-jo-text" hidden data-form-success>
+    <Icon name="check-circle" weight="fill" class="mt-px flex-none text-jo-correct" />
+    <span>Message envoyé. On te répond en général sous deux jours ouvrés.</span>
+  </p>
+</div>
