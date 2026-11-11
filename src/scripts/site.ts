@@ -41,27 +41,3 @@ if (header && menu && button) {
     }
   });
 }
-
-/**
- * Rangée des rangs (`RankStrip`) en compact : flèches latérales, masquées en début ou en fin de rangée. Au-delà
- * de 768 px, la rangée tient sur une ligne : pas de flèches.
- */
-for (const strip of document.querySelectorAll<HTMLElement>("[data-rank-strip]")) {
-  const scroller = strip.querySelector<HTMLElement>("[data-rank-scroller]");
-  const prev = strip.querySelector<HTMLButtonElement>("[data-rank-prev]");
-  const next = strip.querySelector<HTMLButtonElement>("[data-rank-next]");
-  if (!scroller || !prev || !next) continue;
-
-  const update = () => {
-    const scrollable = scroller.scrollWidth > scroller.clientWidth + 2;
-    prev.hidden = next.hidden = !scrollable;
-    prev.classList.toggle("invisible", scroller.scrollLeft <= 2);
-    next.classList.toggle("invisible", scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 2);
-  };
-  const go = (direction: 1 | -1) => scroller.scrollBy({ left: direction * scroller.clientWidth * 0.8, behavior: "smooth" });
-  prev.addEventListener("click", () => go(-1));
-  next.addEventListener("click", () => go(1));
-  scroller.addEventListener("scroll", update, { passive: true });
-  new ResizeObserver(update).observe(scroller);
-  update();
-}
