@@ -10,8 +10,8 @@ import resultDark from "../assets/captures/hero-result-dark.png";
 import resultLight from "../assets/captures/hero-result-light.png";
 import SiteInner from "./SiteInner.astro";
 
-/** Châssis iPhone 18 du lab, en px CSS : 402 + 2 × 5 de large, 874 + 2 × 5 de haut. */
-const PHONE = { width: 412, height: 884 };
+/** Cadre iPhone 18 Pro Max noir du lab (`MockupShell`), en px CSS : 1 520 × 3 068 au @3x. */
+const PHONE = { width: 507, height: 1023 };
 const groups = [...HERO.title, HERO.accent];
 const phone = (scale: number) => ({ width: Math.round(PHONE.width * scale), height: Math.round(PHONE.height * scale) });
 const front = phone(0.62);
