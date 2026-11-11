@@ -1,3 +1,9 @@
+## [1.2.0](https://github.com/joutio/joutio-landing/compare/v1.1.0...v1.2.0) (2026-11-11)
+
+### Features
+
+* **hero:** iPhone 18 Pro Max black frame on the phones ([d38bcb3](https://github.com/joutio/joutio-landing/commit/d38bcb3003e6bb30e868c5f7bbe670cc85cdcd4c))
+
 ## [1.1.0](https://github.com/joutio/joutio-landing/compare/v1.0.0...v1.1.0) (2026-11-10)
 
 ### Features
