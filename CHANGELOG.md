@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/joutio/joutio-landing/compare/v1.2.0...v1.3.0) (2026-11-11)
+
+### Features
+
+* **ranks:** rank strip scrolls freely in compact, no snap or arrows ([6c7e1fe](https://github.com/joutio/joutio-landing/commit/6c7e1fee9850992e0a6b6c058b010abfd4ff2b6e))
+
 ## [1.2.0](https://github.com/joutio/joutio-landing/compare/v1.1.0...v1.2.0) (2026-11-11)
 
 ### Features
