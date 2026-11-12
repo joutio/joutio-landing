@@ -1,3 +1,9 @@
+## [1.4.0](https://github.com/joutio/joutio-landing/compare/v1.3.0...v1.4.0) (2026-11-12)
+
+### Features
+
+* hero captures with styled avatar and premium badge ([b8840af](https://github.com/joutio/joutio-landing/commit/b8840af1fc64d92ecc2404154b5b0e25f995b100))
+
 ## [1.3.0](https://github.com/joutio/joutio-landing/compare/v1.2.0...v1.3.0) (2026-11-11)
 
 ### Features
