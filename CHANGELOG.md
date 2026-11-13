@@ -1,3 +1,9 @@
+## [1.5.0](https://github.com/joutio/joutio-landing/compare/v1.4.0...v1.5.0) (2026-11-13)
+
+### Features
+
+* **join:** legacy room links redirect to go.joutio.com ([79071f8](https://github.com/joutio/joutio-landing/commit/79071f8010ef7e56a701f5b9d3315d641c0957ad))
+
 ## [1.4.0](https://github.com/joutio/joutio-landing/compare/v1.3.0...v1.4.0) (2026-11-12)
 
 ### Features
