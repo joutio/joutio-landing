@@ -11,7 +11,8 @@ import Field from "./Field.astro";
 import FormStatus from "./FormStatus.astro";
 import Icon from "./Icon.astro";
 
-const endpoint = import.meta.env.PUBLIC_NOTICE_ENDPOINT ?? "";
+// L'API publique du BFF par défaut : la release ne transmet pas de variable d'environnement à la construction.
+const endpoint = import.meta.env.PUBLIC_NOTICE_ENDPOINT || "https://api.joutio.com/api/public/content-notices";
 const chip =
   "jo-type-callout jo-transition relative inline-flex h-8 flex-none cursor-pointer items-center gap-2 rounded-jo-full bg-jo-raised px-3 whitespace-nowrap text-jo-text after:absolute after:inset-x-0 after:-inset-y-1.5 active:opacity-60 has-[:checked]:bg-jo-text has-[:checked]:font-semibold has-[:checked]:text-jo-bg has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-jo-text";
 const QUALITIES = [
