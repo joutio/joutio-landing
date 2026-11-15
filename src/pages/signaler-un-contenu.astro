@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LegalLayout from "../components/LegalLayout.astro";
+import NoticeForm from "../components/NoticeForm.astro";
+import { LEGAL } from "../data/legal";
+---
+
+<BaseLayout
+  title="Signaler un contenu"
+  description="Signaler à Joutio un contenu illicite publié par un joueur : image protégée, atteinte au droit à l'image, usurpation."
+  noindex={!LEGAL.ready}
+>
+  <LegalLayout title="Signaler un contenu" notice="procédure de notification">
+    <p>
+      Les sujets, questions et images créés par les joueurs sont publiés sous leur responsabilité. Pour ces contenus,
+      Joutio agit comme hébergeur (article 6 de la LCEN, article 6 du règlement européen sur les services numériques,
+      DSA). Si un contenu porte atteinte à tes droits ou te paraît illicite, signale-le avec le formulaire ci-dessous.
+    </p>
+
+    <h2>Ce que doit contenir la notification</h2>
+    <ul>
+      <li>ton identité (nom, ou dénomination et représentant pour une organisation) et une adresse e-mail ;</li>
+      <li>la localisation précise du contenu (lien du sujet ou du joueur, numéro de la question) ;</li>
+      <li>la description du contenu et les raisons pour lesquelles il est illicite, avec les dispositions en cause ;</li>
+      <li>pour le droit d'auteur ou le droit à l'image, ta qualité (titulaire ou représentant) et, si possible, la justification de tes droits ;</li>
+      <li>une déclaration de bonne foi sur l'exactitude des informations.</li>
+    </ul>
+    <p>
+      Tu n'as pas besoin de compte Joutio. Ces informations correspondent à l'article 6-I-5 de la LCEN et à l'article
+      16 du DSA.
+    </p>
+
+    <h2>Ce qui se passe ensuite</h2>
+    <ul>
+      <li>tu reçois un accusé de réception ;</li>
+      <li>la modération examine la notification sans délai et, si le contenu est manifestement illicite, le retire ou
+        en bloque l'accès : image retirée, question supprimée ou sujet fermé ;</li>
+      <li>l'auteur du contenu est informé de la décision et de ses motifs, et peut la contester ;</li>
+      <li>en cas d'atteintes répétées, le compte de l'auteur peut être suspendu.</li>
+    </ul>
+    <p>
+      Une notification abusive, présentée comme illicite pour obtenir un retrait en sachant que l'information est
+      inexacte, est punie d'un an d'emprisonnement et de 15 000 € d'amende (article 6-I-4 de la LCEN).
+    </p>
+
+    <h2>Formulaire</h2>
+    <NoticeForm />
+
+    <p>
+      Tu peux aussi écrire à <a href={`mailto:${LEGAL.contactEmail}`}>{LEGAL.contactEmail}</a>, point de contact unique
+      de Joutio (DSA, articles 11 et 12).
+    </p>
+  </LegalLayout>
+</BaseLayout>

@@ -7,7 +7,9 @@
  */
 export const LEGAL = {
   ready: false,
-  updatedAt: "30 octobre 2026",
+  updatedAt: "15 novembre 2026",
+  /** Version des CGU, envoyée avec chaque déclaration de droits sur une image (`TERMS_VERSION` des apps). */
+  termsVersion: "2026-11-15",
   entity: "[Raison sociale]",
   legalForm: "[Forme juridique]",
   capital: "[montant]",

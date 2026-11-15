@@ -29,6 +29,12 @@ function invalid(control: Control) {
 function validate(form: HTMLFormElement) {
   let first: Control | null = null;
   for (const control of form.querySelectorAll<Control>("input[data-error], textarea[data-error]")) {
+    if (control instanceof HTMLInputElement && control.type === "checkbox") {
+      const bad = control.required && !control.checked;
+      setError(control, bad ? control.dataset.error || null : null);
+      if (bad && !first) first = control;
+      continue;
+    }
     const bad = invalid(control);
     setError(control, bad ? control.dataset.error || null : null);
     if (bad && !first) first = control;
@@ -68,6 +74,13 @@ for (const form of document.querySelectorAll<HTMLFormElement>("form[data-form]")
     const message = String(data.get("message") ?? "").trim();
     const subject = String(data.get("subject") ?? "").trim();
 
+    if (!endpoint && kind === "notice") {
+      const body = [...data.entries()].filter(([key]) => key !== "website").map(([key, value]) => `${key} : ${String(value)}`).join("\n")
+      window.location.href = `mailto:${fallbackEmail}?subject=${encodeURIComponent("Notification de contenu illicite")}&body=${encodeURIComponent(body)}`;
+      done();
+      return;
+    }
+
     if (!endpoint) {
       const mailSubject = kind === "contact" ? `Contact Joutio${subject ? ` — ${subject}` : ""}` : "Liste d'attente Joutio Premium";
       const mailBody = kind === "contact" ? `${message}\n\n— ${email}` : `Préviens-moi à la sortie de Premium : ${email}`;
@@ -83,15 +96,28 @@ for (const form of document.querySelectorAll<HTMLFormElement>("form[data-form]")
     if (spinner) spinner.removeAttribute("hidden");
 
     try {
-      const payload = new URLSearchParams();
-      data.forEach((value, key) => payload.append(key, String(value)));
-      payload.append("source", kind);
-      payload.append("page", window.location.pathname);
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
-        body: payload,
-      });
+      let response: Response;
+      if (form.dataset.json !== undefined) {
+        // API JSON (notifications de contenu) : cases à cocher en booléens.
+        const json: Record<string, string | boolean> = {};
+        data.forEach((value, key) => (json[key] = String(value)));
+        for (const box of form.querySelectorAll<HTMLInputElement>("input[type=checkbox]")) json[box.name] = box.checked;
+        response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(json),
+        });
+      } else {
+        const payload = new URLSearchParams();
+        data.forEach((value, key) => payload.append(key, String(value)));
+        payload.append("source", kind);
+        payload.append("page", window.location.pathname);
+        response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
+          body: payload,
+        });
+      }
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       form.reset();
       done();

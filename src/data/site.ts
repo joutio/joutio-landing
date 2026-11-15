@@ -184,6 +184,10 @@ export const FAQ: FaqGroup[] = [
         a: "À la fin de chaque question, sa réponse s’affiche en vert ou en rouge, avec une encoche à droite. La tienne porte l’encoche à gauche.",
       },
       { q: "Que se passe-t-il si je quitte un duel ?", a: "L’abandon donne la victoire à ton adversaire et compte comme une défaite dans ton Elo." },
+      {
+        q: "Que signifie le badge bleu « Officiel » sur un sujet ?",
+        a: "Le sujet est édité par Joutio. Les autres sujets sont créés par des joueurs, sous leur responsabilité. Un contenu te paraît illicite ? Signale-le depuis la page « Signaler un contenu ».",
+      },
     ],
   },
   {
@@ -245,6 +249,7 @@ export const FOOTER_LINKS: readonly { title: string; links: readonly NavItem[] }
     links: [
       { label: "Mentions légales", href: "/mentions-legales/" },
       { label: "Conditions d’utilisation", href: "/terms/" },
+      { label: "Signaler un contenu", href: "/signaler-un-contenu/" },
       { label: "Confidentialité", href: "/privacy/" },
       { label: "Cookies", href: "/cookies/" },
       { label: "Suppression des données", href: "/data-deletion/" },

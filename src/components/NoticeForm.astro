@@ -1,0 +1,102 @@
+---
+/**
+ * Formulaire de notification de contenu illicite (LCEN art. 6-I-5, DSA art. 16) : identité du notifiant, qualité,
+ * contenu visé, motif, description, justification des droits, déclaration de bonne foi. Envoyé en JSON au BFF
+ * (`POST /api/public/content-notices`) ; sans endpoint, repli par e-mail. `website` est un champ piège.
+ */
+import { SITE } from "../data/site";
+import { buttonStyles } from "../lib/button";
+import { cn } from "../lib/cn";
+import Field from "./Field.astro";
+import FormStatus from "./FormStatus.astro";
+import Icon from "./Icon.astro";
+
+const endpoint = import.meta.env.PUBLIC_NOTICE_ENDPOINT ?? "";
+const chip =
+  "jo-type-callout jo-transition relative inline-flex h-8 flex-none cursor-pointer items-center gap-2 rounded-jo-full bg-jo-raised px-3 whitespace-nowrap text-jo-text after:absolute after:inset-x-0 after:-inset-y-1.5 active:opacity-60 has-[:checked]:bg-jo-text has-[:checked]:font-semibold has-[:checked]:text-jo-bg has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-jo-text";
+const QUALITIES = [
+  { value: "RIGHTS_HOLDER", label: "Titulaire des droits" },
+  { value: "REPRESENTATIVE", label: "Représentant du titulaire" },
+  { value: "THIRD_PARTY", label: "Autre personne" },
+];
+const CATEGORIES = [
+  { value: "COPYRIGHT", label: "Droit d’auteur" },
+  { value: "IMAGE_RIGHTS", label: "Droit à l’image" },
+  { value: "IMPERSONATION", label: "Usurpation (Joutio ou une personne)" },
+  { value: "OTHER_ILLEGAL", label: "Autre contenu illicite" },
+];
+---
+
+<div class="grid content-start gap-5" data-form-root>
+  <form
+    novalidate
+    class="grid content-start gap-5"
+    action={`mailto:${SITE.email}?subject=${encodeURIComponent("Notification de contenu illicite")}`}
+    method="post"
+    enctype="text/plain"
+    data-form
+    data-json
+    data-endpoint={endpoint}
+    data-fallback-email={SITE.email}
+    data-form-kind="notice"
+  >
+    <div class="grid gap-5 @3xl:grid-cols-2">
+      <Field name="name" label="Nom et prénom (ou dénomination)" autocomplete="name" required error="Indique ton nom ou celui de ton organisation." />
+      <Field name="email" label="E-mail" type="email" inputmode="email" autocomplete="email" required error="Indique une adresse e-mail complète, pour qu’on puisse te répondre." />
+    </div>
+    <fieldset class="grid gap-2">
+      <legend class="jo-type-callout mb-2">Tu es</legend>
+      <div class="flex flex-wrap gap-2">
+        {QUALITIES.map((quality, index) => (
+          <label class={chip}><input type="radio" name="quality" value={quality.value} checked={index === 0} class="sr-only" />{quality.label}</label>
+        ))}
+      </div>
+    </fieldset>
+    <fieldset class="grid gap-2">
+      <legend class="jo-type-callout mb-2">Motif</legend>
+      <div class="flex flex-wrap gap-2">
+        {CATEGORIES.map((category, index) => (
+          <label class={chip}><input type="radio" name="category" value={category.value} checked={index === 0} class="sr-only" />{category.label}</label>
+        ))}
+      </div>
+    </fieldset>
+    <Field
+      name="contentUrl"
+      label="Lien du contenu (sujet, joueur) ou nom du sujet et numéro de la question"
+      placeholder="https://go.joutio.com/t/…"
+      required
+      error="Indique où se trouve le contenu."
+    />
+    <Field
+      name="description"
+      label="Description du contenu et raisons de son caractère illicite"
+      multiline
+      required
+      error="Décris le contenu et pourquoi il est illicite (20 caractères au moins)."
+    />
+    <Field
+      name="rightsEvidence"
+      label="Justification de tes droits (facultatif)"
+      multiline
+      placeholder="Lien vers l’œuvre originale, date de création, enregistrement…"
+      error=""
+    />
+    <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+    <label class="jo-type-callout flex items-start gap-3">
+      <input type="checkbox" name="goodFaith" value="true" required class="mt-1 size-4 accent-[var(--jo-accent)]" data-error="Confirme l’exactitude de ta notification." />
+      <span>
+        Je déclare de bonne foi que les informations de cette notification sont exactes et complètes. Je sais qu’une
+        notification abusive ou mensongère est punie par la loi (article 6-I-4 de la LCEN).
+      </span>
+    </label>
+    <button type="submit" class={cn(buttonStyles({ size: "L" }), "justify-self-start")}>
+      <Icon name="circle-notch" class="jo-spin" data-loading hidden />
+      Envoyer la notification
+    </button>
+    <FormStatus fallbackEmail={SITE.email} failure="L'envoi a échoué. Réessaie, ou écris directement à" />
+  </form>
+  <p role="status" class="jo-type-callout flex items-start gap-2 text-jo-text" hidden data-form-success>
+    <Icon name="check-circle" weight="fill" class="mt-px flex-none text-jo-correct" />
+    <span>Notification reçue. Nous l’examinons rapidement et te répondons par e-mail.</span>
+  </p>
+</div>
