@@ -1,3 +1,9 @@
+## [1.6.1](https://github.com/joutio/joutio-landing/compare/v1.6.0...v1.6.1) (2026-11-15)
+
+### Bug Fixes
+
+* **legal:** post content notices to the BFF by default ([27794ab](https://github.com/joutio/joutio-landing/commit/27794abe9f2e20f5e4d3ca5e6ef11a500e251332))
+
 ## [1.6.0](https://github.com/joutio/joutio-landing/compare/v1.5.0...v1.6.0) (2026-11-15)
 
 ### Features
