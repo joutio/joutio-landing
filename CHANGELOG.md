@@ -1,3 +1,9 @@
+## [1.6.0](https://github.com/joutio/joutio-landing/compare/v1.5.0...v1.6.0) (2026-11-15)
+
+### Features
+
+* **legal:** content notice page, rewritten terms and official badge FAQ ([a0a5881](https://github.com/joutio/joutio-landing/commit/a0a5881d2fc4d55acad727814f6e76a7339e692b))
+
 ## [1.5.0](https://github.com/joutio/joutio-landing/compare/v1.4.0...v1.5.0) (2026-11-13)
 
 ### Features
