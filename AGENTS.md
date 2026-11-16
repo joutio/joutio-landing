@@ -20,6 +20,8 @@ modification visuelle. Un changement de design se fait d'abord dans le lab, puis
 - Tailwind v4 (`@tailwindcss/vite`) **au build** : les classes des composants du lab se reportent telles
   quelles, requêtes de conteneur comprises (`@3xl` = 768 px, `@5xl` = 1 024 px) sur la racine `.jo-site`.
   `cn()` (`src/lib/cn.ts`, tailwind-merge) comme dans le lab ; classes des boutons dans `src/lib/button.ts`.
+- **Image de partage** `public/og.png` (1 200 × 630, aussi l'image par défaut des liens `go.joutio.com`) : rendue par
+  le lab (`#/og`, `src/lab/site/og-image.tsx`, `npm run captures` → `public/site/og.png`), copiée ici, jamais retouchée.
 - **Copiés tels quels depuis le lab, jamais modifiés ici** : `src/styles/tokens.css`
   (`design/tokens/tokens.web.css`), `src/styles/site.css`, `src/lib/button-styles.ts`,
   `public/brand/`, `public/site/avatars/`, `src/assets/captures/` (`npm run captures` dans le lab).
@@ -49,6 +51,6 @@ modification visuelle. Un changement de design se fait d'abord dans le lab, puis
 
 - Ajouter un prix Premium, une pub ou un ATT tant que l'IAP n'est pas livré.
 - Réintroduire une gestion presse (retirée le 2026-11-10) sans la concevoir d'abord dans le lab.
-- Dupliquer les pages légales de `joutio-web` : la landing porte les URLs publiques `/terms`,
-  `/privacy`, `/data-deletion` pour les stores. Mettre à jour les deux versions si un texte change.
+- Dupliquer les pages légales dans `joutio-web` : la landing porte **seule** les URLs publiques `/terms`,
+  `/privacy`, `/data-deletion` (stores, apps) ; les copies de `joutio-web/public/` ont été supprimées le 2026-11-16.
 - Committer une empreinte SHA-256 de keystore en clair : utiliser `ANDROID_SHA256` au build.
