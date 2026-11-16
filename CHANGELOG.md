@@ -1,3 +1,9 @@
+## [1.7.0](https://github.com/joutio/joutio-landing/compare/v1.6.1...v1.7.0) (2026-11-16)
+
+### Features
+
+* new share image rendered from the design lab ([1c39690](https://github.com/joutio/joutio-landing/commit/1c396903de33e20dcc37f848a7d850a823755eaa))
+
 ## [1.6.1](https://github.com/joutio/joutio-landing/compare/v1.6.0...v1.6.1) (2026-11-15)
 
 ### Bug Fixes
