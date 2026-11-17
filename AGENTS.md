@@ -1,5 +1,7 @@
 # AGENTS.md — joutio-landing
 
+Lire : `../../AGENTS.md`, puis `design/specs/site-kit.md`.
+
 ## Rôle
 
 Landing publique de Joutio (marketing, FAQ, Premium « bientôt » avec liste d'attente, contact, pages
@@ -50,7 +52,7 @@ modification visuelle. Un changement de design se fait d'abord dans le lab, puis
 ## À ne pas faire
 
 - Ajouter un prix Premium, une pub ou un ATT tant que l'IAP n'est pas livré.
-- Réintroduire une gestion presse (retirée le 2026-11-10) sans la concevoir d'abord dans le lab.
+- Ajouter une rubrique (presse, etc.) sans la concevoir d'abord dans le lab.
 - Dupliquer les pages légales dans `joutio-web` : la landing porte **seule** les URLs publiques `/terms`,
-  `/privacy`, `/data-deletion` (stores, apps) ; les copies de `joutio-web/public/` ont été supprimées le 2026-11-16.
+  `/privacy`, `/data-deletion` (stores, apps).
 - Committer une empreinte SHA-256 de keystore en clair : utiliser `ANDROID_SHA256` au build.

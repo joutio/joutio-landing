@@ -46,12 +46,11 @@ public/
 ## Décisions produit
 
 - **Rendu** : traduction des pages validées du lab (`design/`, `/site/<id>`), selon
-  `design/specs/site-kit.md` (2026-11-10). Sombre par défaut, clair au choix.
+  `design/specs/site-kit.md`. Sombre par défaut, clair au choix.
 - **Premium** : annoncé « bientôt », sans prix ni achat. Aucune pub, aucun ATT.
 - **Téléchargement** : action principale de l'accueil, boutons App Store et Google Play
   (`STORE_LINKS` ; identifiant App Store à renseigner). La liste d'attente ne sert plus
   qu'à Premium.
-- **Presse** : retirée (2026-11-10), « Contact » la remplace dans la navigation.
 - **Légal** : `/mentions-legales`, `/terms`, `/privacy`, `/cookies` et
   `/data-deletion` sont servis par la landing, sur `joutio.com` — ce sont les
   URLs à déclarer aux stores. Les informations société restent à compléter.
