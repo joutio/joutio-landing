@@ -1,3 +1,9 @@
+## [1.7.1](https://github.com/joutio/joutio-landing/compare/v1.7.0...v1.7.1) (2026-11-20)
+
+### Bug Fixes
+
+* **docker:** rebuild on patched base images ([1dab870](https://github.com/joutio/joutio-landing/commit/1dab87095c0cfe92b479906d940126316a57fbde))
+
 ## [1.7.0](https://github.com/joutio/joutio-landing/compare/v1.6.1...v1.7.0) (2026-11-16)
 
 ### Features
